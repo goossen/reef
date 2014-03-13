@@ -1,0 +1,63 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="reef.css">
+<script src="reef.js"></script>
+</head>
+
+<body class="background">
+   <div style="width: 600px;">
+
+      <div>
+         <fieldset class="fieldsetcorners">
+            <legend>Power</legend>  
+            <table id="buttonstable">
+               
+            </table>
+         </fieldset>
+      </div>
+
+      <div id="water" class="section">
+	<fieldset class="setheight">
+        <legend>Water cycle</legend>     
+          <input type = "radio"
+                 name = "water"
+                 id = "rad1"
+                 onclick="cycle(id)"/>
+          <label for = "rad1">ON</label>
+          <br>
+          <input type = "radio"
+                 name = "water"
+                 id = "rad2"
+                 onclick="cycle(id)"/>
+          <label for = "rad2">Water change</label>
+          <br>
+          <input type = "radio"
+                 name = "water"
+                 id = "rad3"
+                 onclick="cycle(id)"/>
+          <label for = "rad3">Wave 1</label>
+        </fieldset>
+      </div>
+
+      <div id="temperature" class="section">
+         <fieldset class="setheight">
+            <legend>Temperature</legend>   
+           <p class="textOK">81.2 F</p>
+         </fieldset>
+      </div>
+
+      <div id="level" class="section">
+         <fieldset class="setheight">
+            <legend>Water Level</legend>   
+            unknown
+         </fieldset>
+      </div>
+
+   </div>
+
+<script>
+loadButtons();
+</script>
+
+</body>
+</html>

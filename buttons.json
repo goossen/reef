@@ -1,0 +1,20 @@
+{
+   "rows": [
+      {"buttons":[
+         {"id":"1", "label":"light1", "state":"on"}, 
+         {"id":"2", "label":"sump1", "state":"on"}, 
+         {"id":"3", "label":"pump 1", "state":"on"}, 
+         {"id":"4", "label":"pump 3", "state":"off"}, 
+         {"id":"5", "label":"skimmer", "state":"on"}, 
+         {"id":"6", "label":"heater", "state":"on"}
+      ]}, 
+      {"buttons":[
+         {"id":"7", "label":"light2", "state":"on"}, 
+         {"id":"8", "label":"air lift", "state":"on"}, 
+         {"id":"9", "label":"pump 2", "state":"on"}, 
+         {"id":"10", "label":"pump 4", "state":"off"}, 
+         {"id":"11", "label":"PO4 reactor", "state":"off"}, 
+         {"id":"12", "label":"ATO", "state":"off"}
+      ]}
+   ]
+}
