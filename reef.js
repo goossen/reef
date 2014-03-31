@@ -1,6 +1,7 @@
+var optionsJSON;
+var buttonsJSON;
 
-function power(id)
-{
+function power(id) {
    var className = document.getElementById(id).className;
    if (className.indexOf("off") != -1) {
       poweron(id);
@@ -9,45 +10,40 @@ function power(id)
    }
 }
 
-function poweron(id)
-{
+function poweron(id) {
    document.getElementById(id).className = "powerbutton on";
+   var xmlhttp=new XMLHttpRequest();
+   xmlhttp.open("PUT","?open=" + _getGPIO(id),true);
+   xmlhttp.send();
 }
 
-function poweroff(id)
-{
-   document.getElementById(id).className = "powerbutton off";
-}
+function _getGPIO(id) {
+   //get the GPIO pin number
+   var jsonRows = this.buttonsJSON.rows;
 
-function cycle(id)
-{
-   console.log(id);
-   if (id === "rad1") {
-      poweron("btn1");
-      poweron("btn2");
-      poweron("btn3");
-      poweron("btn5");
-      poweron("btn6");
-      poweron("btn7");
-      poweron("btn8");
-      poweron("btn9");
-   } else if (id === "rad2") {
-      poweron("btn1");
-      poweroff("btn2");
-      poweroff("btn3");
-      poweroff("btn5");
-      poweroff("btn6");
-      poweron("btn7");
-      poweroff("btn8");
-      poweroff("btn9");
+   for(var i in jsonRows) {
+      var jsonButtons = jsonRows[i].buttons;
+      for (var j in jsonButtons) {
+         if (jsonButtons[j].id === id) {
+            return jsonButtons[j].gpio;
+         }
+      }
    }
 }
 
- function loadJSON(callback) {   
+function poweroff(id) {
+   document.getElementById(id).className = "powerbutton off";
+}
+
+function setOption(id) {
+   _setOptionButtons(id, this.optionsJSON);
+}
+
+function loadJSON(file, callback) {   
 
     var xobj = new XMLHttpRequest();
         xobj.overrideMimeType("application/json");
-	xobj.open('GET', 'buttons.json', true); // Replace 'my_data' with the path to your file
+	xobj.open('GET', file, true); // Replace 'my_data' with the path to your file
 	xobj.onreadystatechange = function () {
           if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
@@ -55,26 +51,39 @@ function cycle(id)
           }
     };
     xobj.send(null);  
- }
+}
 
-function loadButtons() {
- loadJSON(function(response) {
-  // Parse JSON string into object
-	var actual_JSON = JSON.parse(response);
-	console.log(actual_JSON);
+function init() {
+   _loadButtons();
+   _loadOptions();
+   _getTemperature();
+}
 
-	//document.getElementById("buttonstable").innerHTML = actual_JSON.buttons[1].label;
-	tableCreate(actual_JSON);
- })
+function _getTemperature() {
+   var xmlhttp=new XMLHttpRequest();
+   xmlhttp.open("GET","/temperature",true);
+   xmlhttp.send();
+   var tempC = xmlhttp.responseText;
+   var tempF=tempC / 1000 * 9 / 5 + 32;
+   document.getElementById("temp1").innerHTML = Math.round(tempF * 10) / 10 + " F";
+}
 
- function tableCreate(json) {
+function _loadButtons() {
+   loadJSON('buttons.json', function(response) {
+      // Parse JSON string into object
+      this.buttonsJSON = JSON.parse(response);
 
-        // create elements <table> and a <tbody>
-        var tbl     = document.getElementById("buttonstable");
-        var tblBody = document.createElement("tbody");
+      _tableCreate(this.buttonsJSON);
+   });
+}
 
-        // cells creation
+function _tableCreate(json) {
 
+   // create elements <table> and a <tbody>
+   var tbl     = document.getElementById("buttonstable");
+   var tblBody = document.createElement("tbody");
+
+   // cells creation
    var jsonRows = json.rows;
 
    for(var i in jsonRows) {
@@ -88,9 +97,9 @@ function loadButtons() {
          var cell = document.createElement("td");    
                  
          var button = document.createElement("button");
-         button.setAttribute("class", "powerbutton " + jsonButtons[j].state);
+         button.setAttribute("class", "powerbutton off");
          button.setAttribute("type", "submit");
-         button.setAttribute("id", "btn" + jsonButtons[j].id);
+         button.setAttribute("id", jsonButtons[j].id);
          button.setAttribute("onclick", "power(id)");
          cell.appendChild(button);
 
@@ -100,13 +109,82 @@ function loadButtons() {
          cell.appendChild(paragraph);
 
          row.appendChild(cell);
-       }
+      }
 
-       //row added to end of table body
-       tblBody.appendChild(row);
+      //row added to end of table body
+      tblBody.appendChild(row);
    }
 
    // append the <tbody> inside the <table>
    tbl.appendChild(tblBody);
-  }
 }
+
+function _loadOptions() {
+   loadJSON('options.json', function(response) {
+      // Parse JSON string into object
+      this.optionsJSON = JSON.parse(response);
+
+      _optionsCreate(this.optionsJSON);
+   });
+}
+
+function _optionsCreate(json) {
+
+   // create elements
+   var options     = document.getElementById("options");
+   var jsonOptions = json.options;
+
+   for(var i in jsonOptions) {
+      // create options and text node 
+      var input = document.createElement("input");    
+                 
+      input.setAttribute("type", "radio");
+      input.setAttribute("id", jsonOptions[i].id);
+      input.setAttribute("onclick", "setOption(id)");
+      input.setAttribute("name", "group1");
+
+      console.log(i);
+      if (jsonOptions[i].checked==="true") {
+         input.setAttribute("checked", "checked");
+         setOption(jsonOptions[i].id);
+      }
+
+      options.appendChild(input);
+
+      var label = document.createElement("label");
+      label.setAttribute("for", "rad" + jsonOptions[i].id);
+      var text = document.createTextNode(jsonOptions[i].label);
+      label.appendChild(text);
+      options.appendChild(label);
+      options.appendChild(document.createElement("br"));
+   }
+
+}
+
+function _setOptionButtons(id, json) {
+
+   // create elements
+   var options     = document.getElementById("options");
+   var jsonOptions = json.options;
+
+   for(var i in jsonOptions) {
+      var option = jsonOptions[i];
+      if (option.id===id) {
+         for(var j in option.buttons) {
+             var button = option.buttons[j];
+             if (button.state === "on") {
+                poweron(button.id);
+             } else if (button.state === "variable") {
+                poweron(button.id);//TODO use clock, check times
+             } else if (button.state === "off") {
+                poweroff(button.id);
+             }
+         }
+      }
+
+   }
+
+
+}
+
+

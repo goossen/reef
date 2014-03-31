@@ -1,20 +1,20 @@
 {
    "rows": [
       {"buttons":[
-         {"id":"1", "label":"light1", "state":"on"}, 
-         {"id":"2", "label":"sump1", "state":"on"}, 
-         {"id":"3", "label":"pump 1", "state":"on"}, 
-         {"id":"4", "label":"pump 3", "state":"off"}, 
-         {"id":"5", "label":"skimmer", "state":"on"}, 
-         {"id":"6", "label":"heater", "state":"on"}
+         {"id":"button1", "gpio":"7", "label":"light1"}, 
+         {"id":"button2", "gpio":"11", "label":"sump1"}, 
+         {"id":"button3", "gpio":"12", "label":"pump 1"}, 
+         {"id":"button4", "gpio":"13", "label":"pump 3"}, 
+         {"id":"button5", "gpio":"15", "label":"skimmer"}, 
+         {"id":"button6", "gpio":"16", "label":"heater"}
       ]}, 
       {"buttons":[
-         {"id":"7", "label":"light2", "state":"on"}, 
-         {"id":"8", "label":"air lift", "state":"on"}, 
-         {"id":"9", "label":"pump 2", "state":"on"}, 
-         {"id":"10", "label":"pump 4", "state":"off"}, 
-         {"id":"11", "label":"PO4 reactor", "state":"off"}, 
-         {"id":"12", "label":"ATO", "state":"off"}
+         {"id":"button7", "gpio":"18", "label":"light2"}, 
+         {"id":"button8", "gpio":"22", "label":"air lift"}, 
+         {"id":"button9", "gpio":"23", "label":"pump 2"}, 
+         {"id":"button10", "gpio":"24", "label":"pump 4"}, 
+         {"id":"button11", "gpio":"25", "label":"PO4 reactor"}, 
+         {"id":"button12", "gpio":"26", "label":"ATO"}
       ]}
    ]
 }

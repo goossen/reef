@@ -17,32 +17,16 @@
       </div>
 
       <div id="water" class="section">
-	<fieldset class="setheight">
-        <legend>Water cycle</legend>     
-          <input type = "radio"
-                 name = "water"
-                 id = "rad1"
-                 onclick="cycle(id)"/>
-          <label for = "rad1">ON</label>
-          <br>
-          <input type = "radio"
-                 name = "water"
-                 id = "rad2"
-                 onclick="cycle(id)"/>
-          <label for = "rad2">Water change</label>
-          <br>
-          <input type = "radio"
-                 name = "water"
-                 id = "rad3"
-                 onclick="cycle(id)"/>
-          <label for = "rad3">Wave 1</label>
+	<fieldset id="options" class="setheight">
+        <legend>Water cycle</legend>
+          
         </fieldset>
       </div>
 
       <div id="temperature" class="section">
          <fieldset class="setheight">
             <legend>Temperature</legend>   
-           <p class="textOK">81.2 F</p>
+           <p id="temp1" class="textOK">81.2 F</p>
          </fieldset>
       </div>
 
@@ -56,7 +40,7 @@
    </div>
 
 <script>
-loadButtons();
+init();
 </script>
 
 </body>

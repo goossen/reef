@@ -1,0 +1,34 @@
+
+# install npm, git
+apt-get install npm
+apt-get install git
+
+#install nvm, node
+sudo mkdir /opt/node
+wget http://nodejs.org/dist/v0.11.10/node-v0.11.10-linux-arm-pi.tar.gz
+tar xvzf node-v0.11.10-linux-arm-pi.tar.gz
+sudo cp -r node-v0.11.10-linux-arm-pi/* /opt/node
+rm -rf node-v0.11.10-linux-arm-pi
+rm -rf node-v0.11.10-linux-arm-pi.tar.gz
+
+npm install ds18b20
+npm install ds18b20
+
+nano /etc/profile
+# add these lines before export PATH
+NODE_JS_HOME="/opt/node"
+PATH="$PATH:$NODE_JS_HOME/bin"
+
+logout
+
+
+#add nodejs.sh
+
+chmod 755 nodejs.sh
+sudo cp nodejs.sh /etc/init.d
+sudo update-rc.d nodejs.sh defaults
+
+
+sudo /etc/init.d/nodejs.sh start
+
+
