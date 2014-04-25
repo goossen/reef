@@ -1,0 +1,58 @@
+
+.background {
+    background-color: darkblue;
+  }
+
+label, legend, p {
+    color: white;
+  }
+
+.powerbuttonp {
+   margin-top:0px !important;
+   margin-bottom:20px !important;
+}
+
+.section {
+    width: 33.33%; 
+    float:left;
+  }
+
+fieldset {
+    border:2px solid;
+    border-radius:25px;
+    color: white;
+  }
+
+.setheight { 
+    height: 200px;
+  }
+
+button {
+    background-repeat:no-repeat;
+    background-color: transparent;
+    border: none;
+}
+
+.powerbutton { 
+    height: 100px; 
+    width: 100px;  
+    border-radius: 50px;
+    background-size:100px;
+  }
+
+.on {
+    background-image:url('img/pearlon.png');
+  }
+
+.off { 
+    background-image:url('img/pearloff.png');
+  }
+
+.powerbuttontd {
+    text-align: center;
+  }
+
+.textOK {
+    color: lightgreen;
+    font-size: 22px;
+  }

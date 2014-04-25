@@ -2,6 +2,28 @@
 <head>
 <link rel="stylesheet" type="text/css" href="reef.css">
 <script src="reef.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+   io = io.connect()
+
+   // Emit ready event.
+   io.emit('ready') 
+
+   // Listen for the power event.
+   io.on('power', function(data) {
+       console.log(data.message)
+   })  
+
+   // Listen for the temperature event.
+   io.on('temperature', function(data) {
+       console.log(data.message)
+       var tempC = data.message.substr(data.message.indexOf(':') + 1);
+       console.log(tempC)
+       var tempF=tempC * 9 / 5 + 32;
+       document.getElementById("temp1").innerHTML = Math.round(tempF * 10) / 10 + " F";
+   })  
+
+</script>
 </head>
 
 <body class="background">
@@ -10,7 +32,7 @@
       <div>
          <fieldset class="fieldsetcorners">
             <legend>Power</legend>  
-            <table id="buttonstable">
+            <table id="buttonstable" width="100%">
                
             </table>
          </fieldset>
@@ -25,8 +47,10 @@
 
       <div id="temperature" class="section">
          <fieldset class="setheight">
-            <legend>Temperature</legend>   
-           <p id="temp1" class="textOK">81.2 F</p>
+            <legend>Temperature</legend>  
+            <p id="temp1" class="textOK">81.2 F</p>
+
+
          </fieldset>
       </div>
 

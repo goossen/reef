@@ -1,0 +1,46 @@
+{
+   "options": [
+      {"label":"On", "id":"option1", "checked":"true", "buttons":[
+         {"id":"button1", "state":"variable", "file":"light1"}, 
+         {"id":"button2", "state":"on"}, 
+         {"id":"button3", "state":"on"}, 
+         {"id":"button4", "state":"off"}, 
+         {"id":"button5", "state":"on"}, 
+         {"id":"button6", "state":"on"},
+         {"id":"button7", "state":"variable", "file":"light2"}, 
+         {"id":"button8", "state":"on"}, 
+         {"id":"button9", "state":"on"}, 
+         {"id":"button10", "state":"off"}, 
+         {"id":"button11", "state":"off"}, 
+         {"id":"button12", "state":"off"}
+      ]},
+      {"label":"Water change", "id":"option2", "buttons":[
+         {"id":"button1", "state":"on"}, 
+         {"id":"button2", "state":"off"}, 
+         {"id":"button3", "state":"off"}, 
+         {"id":"button4", "state":"off"}, 
+         {"id":"button5", "state":"off"}, 
+         {"id":"button6", "state":"off"},
+         {"id":"button7", "state":"on"}, 
+         {"id":"button8", "state":"off"}, 
+         {"id":"button9", "state":"off"}, 
+         {"id":"button10", "state":"off"}, 
+         {"id":"button11", "state":"off"}, 
+         {"id":"button12", "state":"off"}
+      ]},
+      {"label":"Tide", "id":"option3", "buttons":[
+         {"id":"button1", "state":"variable", "file":"light1"}, 
+         {"id":"button2", "state":"on"}, 
+         {"id":"button3", "state":"variable", "file":"pump1"}, 
+         {"id":"button4", "state":"off"}, 
+         {"id":"button5", "state":"on"}, 
+         {"id":"button6", "state":"on"},
+         {"id":"button7", "state":"variable", "file":"light2"}, 
+         {"id":"button8", "state":"on"}, 
+         {"id":"button9", "state":"variable", "file":"pump2"}, 
+         {"id":"button10", "state":"off"}, 
+         {"id":"button11", "state":"off"}, 
+         {"id":"button12", "state":"off"}
+      ]}
+   ]
+}

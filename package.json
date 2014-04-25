@@ -1,0 +1,10 @@
+{
+    "name" : "Reef",
+    "description" : "NodeJS based aquarium controller",
+    "version" : "0.1.0",
+    "private" : false,
+    "dependencies": {
+        "ds18b20": "latest",
+        "express.io":"latest"
+    }
+}

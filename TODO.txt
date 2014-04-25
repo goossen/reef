@@ -1,0 +1,6 @@
+TODO.txt
+
+load ds18b20 drivers on rpi startup
+sudo modprobe wire
+sudo modprobe w1-gpio
+sudo modprobe w1-therm
