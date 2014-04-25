@@ -7,26 +7,18 @@
          {"id":"button4", "state":"off"}, 
          {"id":"button5", "state":"on"}, 
          {"id":"button6", "state":"on"},
-         {"id":"button7", "state":"variable", "file":"light2"}, 
-         {"id":"button8", "state":"on"}, 
-         {"id":"button9", "state":"on"}, 
-         {"id":"button10", "state":"off"}, 
-         {"id":"button11", "state":"off"}, 
-         {"id":"button12", "state":"off"}
+         {"id":"button7", "state":"on"}, 
+         {"id":"button8", "state":"on"}
       ]},
       {"label":"Water change", "id":"option2", "buttons":[
          {"id":"button1", "state":"on"}, 
          {"id":"button2", "state":"off"}, 
          {"id":"button3", "state":"off"}, 
          {"id":"button4", "state":"off"}, 
-         {"id":"button5", "state":"off"}, 
+         {"id":"button5", "state":"on"}, 
          {"id":"button6", "state":"off"},
-         {"id":"button7", "state":"on"}, 
-         {"id":"button8", "state":"off"}, 
-         {"id":"button9", "state":"off"}, 
-         {"id":"button10", "state":"off"}, 
-         {"id":"button11", "state":"off"}, 
-         {"id":"button12", "state":"off"}
+         {"id":"button7", "state":"off"}, 
+         {"id":"button8", "state":"off"}
       ]},
       {"label":"Tide", "id":"option3", "buttons":[
          {"id":"button1", "state":"variable", "file":"light1"}, 
@@ -35,12 +27,8 @@
          {"id":"button4", "state":"off"}, 
          {"id":"button5", "state":"on"}, 
          {"id":"button6", "state":"on"},
-         {"id":"button7", "state":"variable", "file":"light2"}, 
-         {"id":"button8", "state":"on"}, 
-         {"id":"button9", "state":"variable", "file":"pump2"}, 
-         {"id":"button10", "state":"off"}, 
-         {"id":"button11", "state":"off"}, 
-         {"id":"button12", "state":"off"}
+         {"id":"button7", "state":"off"}, 
+         {"id":"button8", "state":"on"}
       ]}
    ]
 }

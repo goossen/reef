@@ -7,10 +7,10 @@
          {"id":"button4", "gpio":"13", "label":"sump/skimmer"}
       ]}, 
       {"buttons":[
-         {"id":"button7", "gpio":"18", "label":"night light"}, 
-         {"id":"button8", "gpio":"22", "label":"pump 2"}, 
-         {"id":"button9", "gpio":"23", "label":"PO4 reactor"}, 
-         {"id":"button10", "gpio":"24", "label":"heater"}
+         {"id":"button5", "gpio":"18", "label":"night light"}, 
+         {"id":"button6", "gpio":"22", "label":"pump 2"}, 
+         {"id":"button7", "gpio":"23", "label":"PO4 reactor"}, 
+         {"id":"button8", "gpio":"24", "label":"heater"}
       ]}
    ]
 }

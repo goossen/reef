@@ -11,7 +11,16 @@
 
    // Listen for the power event.
    io.on('power', function(data) {
-       console.log(data.message)
+       console.log(data.message);
+       var buttons = data.message;
+       buttons.forEach(function (button) {
+          console.log(button.id + ' ' + button.state);
+          if (button.state === "on") {
+             poweron(button.id);
+          } else if (button.state === "off") {
+             poweroff(button.id, button.file);
+          }
+       });
    })  
 
    // Listen for the temperature event.

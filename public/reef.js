@@ -1,22 +1,31 @@
 var optionsJSON;
 var buttonsJSON;
 
+
+//process the button click, do a server PUT, allow the server to emit state
 function power(id) {
    var className = document.getElementById(id).className;
    if (className.indexOf("off") != -1) {
-      poweron(id);
+      var xmlhttp=new XMLHttpRequest();
+      xmlhttp.open("PUT","?id=" + id + "&state=on",true);
+      xmlhttp.send();
    } else {
-      poweroff(id);
+      var xmlhttp=new XMLHttpRequest();
+      xmlhttp.open("PUT","?id=" + id + "&state=off",true);
+      xmlhttp.send();
    }
 }
 
+//set the button state, following a power event emitted from the server
 function poweron(id) {
    document.getElementById(id).className = "powerbutton on";
-   var xmlhttp=new XMLHttpRequest();
-   xmlhttp.open("PUT","?open=" + _getGPIO(id),true);
-   xmlhttp.send();
 }
 
+function poweroff(id) {
+   document.getElementById(id).className = "powerbutton off";
+}
+
+//TODO move to server
 function _getGPIO(id) {
    //get the GPIO pin number
    var jsonRows = this.buttonsJSON.rows;
@@ -29,10 +38,6 @@ function _getGPIO(id) {
          }
       }
    }
-}
-
-function poweroff(id) {
-   document.getElementById(id).className = "powerbutton off";
 }
 
 function setOption(id) {
@@ -175,35 +180,6 @@ function _setOptionButtons(id, json) {
    }
 }
 
-function _setPower(id, state, difference) {
-
-   // check current state, might need to turn on or off (the opposite of state arg)
-   var className = document.getElementById(id).className;
-   if (className.indexOf("off") != -1) {
-      if (state === "off") {
-         poweron(id);
-      }
-   } else {
-      if (state === "on") {
-         poweron(id);
-      }
-   }
-
-   if (state === "on") {
-      setTimeout(function(){
-         poweron(id);
-         //TODO read schedule again
-//TODO this should run on server
-         //_powervariable(button.id, button.file);
-      }, difference);
-   } else if (state === "off") {
-      setTimeout(function(){
-         poweroff(id);
-         //TODO read schedule again
-         //_powervariable(button.id, button.file);
-      }, difference);
-   }
-}
 
 
 
