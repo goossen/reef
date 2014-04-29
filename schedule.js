@@ -1,15 +1,16 @@
 var fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    gpio = require("pi-gpio");
 
 // Array of scheduled power on/off events, so that clients can be told about these when they connect
 var currentState = [];
 
 exports.readFiles = function() {
-   fs.readdir('public/json/schedule/', function (err, files) { 
+   fs.readdir(path.join(__dirname, 'public/json/schedule'), function (err, files) { 
       if (!err) 
          files.forEach(function (filename) {
             if (filename && filename.indexOf('.json') !== -1) {
-               _parseSchedule('public/json/schedule', filename)
+               _parseSchedule(path.join(__dirname, 'public/json/schedule'), filename)
             }
          });
       else
@@ -17,9 +18,9 @@ exports.readFiles = function() {
    });
 }
 
-fs.watch('public/json/schedule', function (event, filename) {
+fs.watch(path.join(__dirname, 'public/json/schedule'), function (event, filename) {
       if (filename && filename.indexOf('.json') !== -1) {
-         _parseSchedule('public/json/schedule', filename)
+         _parseSchedule(path.join(__dirname, 'public/json/schedule'), filename)
       }
 });
 
@@ -118,6 +119,10 @@ function _setPower(id, state, difference) {
       for (var i = 0; i < currentState.length; i++) {
          if (currentState[i].id === id) {
             newState[i] = {"id":id, "state":state};
+            //temperature is on 7
+            //3,4,5,6 are lights
+            _turnOnOff(id, state);
+
          } else {
             newState[i] = currentState[i];
          }
@@ -126,6 +131,37 @@ function _setPower(id, state, difference) {
    }
 
    app.io.broadcast('power', {message: currentState})
+}
+
+function _turnOnOff(id, state) {
+   gpio.open(3, "output", function(err) {        // Open pin 16 for output
+      gpio.write(3, 1, function() {            // Set pin 16 high (1)
+         if (state === "on") {
+            gpio.open(3);
+         } else {
+            gpio.close(3);                        // Close pin 16
+         }
+      });
+   });
+
+}
+
+//TODO 
+function _getGPIO(id) {
+//   //get the GPIO pin number
+//   var jsonRows = this.buttonsJSON.rows;
+//
+//   for(var i in jsonRows) {
+//      var jsonButtons = jsonRows[i].buttons;
+//      for (var j in jsonButtons) {
+//         if (jsonButtons[j].id === id) {
+//            return jsonButtons[j].gpio;
+//         }
+//      }
+//   }
+   if (id === 'button1') {
+   }
+   return 3;
 }
 
 /*

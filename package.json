@@ -5,6 +5,7 @@
     "private" : false,
     "dependencies": {
         "ds18b20": "latest",
-        "express.io":"latest"
+        "express.io":"latest",
+        "pi-gpio":"latest"
     }
 }

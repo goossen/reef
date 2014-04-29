@@ -25,21 +25,6 @@ function poweroff(id) {
    document.getElementById(id).className = "powerbutton off";
 }
 
-//TODO move to server
-function _getGPIO(id) {
-   //get the GPIO pin number
-   var jsonRows = this.buttonsJSON.rows;
-
-   for(var i in jsonRows) {
-      var jsonButtons = jsonRows[i].buttons;
-      for (var j in jsonButtons) {
-         if (jsonButtons[j].id === id) {
-            return jsonButtons[j].gpio;
-         }
-      }
-   }
-}
-
 function setOption(id) {
    _setOptionButtons(id, this.optionsJSON);
 }
