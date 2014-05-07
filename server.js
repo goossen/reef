@@ -14,7 +14,7 @@ app.configure(function(){
    app.use(express.static(path.join(__dirname, 'public')));
 
    //read all schedule .json files
-   schedule.readFiles();
+   schedule.readFile();
 
    // Log the temperation at a set interval
    temp.startLogging();
@@ -22,10 +22,17 @@ app.configure(function(){
 
 // Setup the ready route, and emit talk event.
 app.io.route('ready', function(req) {
+
    var currentState = schedule.getCurrentState();
    req.io.emit('power', { 
       message: currentState
    })
+
+   var currentSchedule = schedule.getCurrentSchedule();
+   req.io.emit('schedule', { 
+      message: currentSchedule
+   })
+
 })
 
 // Send the client html.

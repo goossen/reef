@@ -54,8 +54,9 @@ cd github.com/goossen
 rm -rf reef
 git clone git://github.com/goossen/reef.git
 
-sudo /etc/init.d/nodejs.sh stop
-sudo /etc/init.d/nodejs.sh start
+sudo sh nodejs.sh stop
+sudo sh nodejs.sh start
+
 
 
 

@@ -1,0 +1,27 @@
+{
+   "buttons": [
+      {"id":"button1", "schedule":[
+         {"time":"09:00", "state":"on"},{"time":"16:00", "state":"off"}
+      ]}, 
+      {"id":"button5", "schedule":[
+         {"time":"08:00", "state":"on"},{"time":"22:00", "state":"off"}
+      ]}, 
+      {"id":"button2", "schedule":[
+         {"time":"16:10", "state":"on"},{"time":"08:00", "state":"off"},
+         {"time":"08:02", "state":"on"},{"time":"08:04", "state":"off"},
+         {"time":"08:06", "state":"on"},{"time":"08:08", "state":"off"},
+         {"time":"08:10", "state":"on"},{"time":"16:00", "state":"off"},
+         {"time":"16:02", "state":"on"},{"time":"16:04", "state":"off"},
+         {"time":"16:06", "state":"on"},{"time":"16:08", "state":"off"}
+      ]}, 
+      {"id":"button6", "schedule":[
+         {"time":"16:11", "state":"on"},{"time":"08:01", "state":"off"},
+         {"time":"08:03", "state":"on"},{"time":"08:05", "state":"off"},
+         {"time":"08:07", "state":"on"},{"time":"08:09", "state":"off"},
+         {"time":"08:11", "state":"on"},{"time":"16:01", "state":"off"},
+         {"time":"16:03", "state":"on"},{"time":"16:05", "state":"off"},
+         {"time":"16:07", "state":"on"},{"time":"16:09", "state":"off"}
+      ]}
+   ]
+
+}

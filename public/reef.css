@@ -1,9 +1,13 @@
+timeOn {
+   color: lightgreen;
+   background-color: darkblue;
+  }
 
 .background {
     background-color: darkblue;
   }
 
-label, legend, p {
+label, legend, p, summary, th {
     color: white;
   }
 

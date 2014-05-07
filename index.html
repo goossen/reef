@@ -11,7 +11,6 @@
 
    // Listen for the power event.
    io.on('power', function(data) {
-       console.log(data.message);
        var buttons = data.message;
        buttons.forEach(function (button) {
           console.log(button.id + ' ' + button.state);
@@ -21,6 +20,12 @@
              poweroff(button.id, button.file);
           }
        });
+   })  
+
+  // Listen for the schedule event.
+   io.on('schedule', function(data) {
+       //load time inputs based on schedule
+       loadSchedule(data.message);
    })  
 
    // Listen for the temperature event.

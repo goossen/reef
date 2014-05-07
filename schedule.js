@@ -2,35 +2,49 @@ var fs = require('fs'),
     path = require('path'),
     gpio = require("pi-gpio");
 
-// Array of scheduled power on/off events, so that clients can be told about these when they connect
+// Array of current power on/off state, so that clients can be told about this when they connect
 var currentState = [];
+// TODO Array of scheduled power on/off events, so that they can be reset if scheduling changes
+var timers = [];
+//current state of schedule
+var currentSchedule;
 
-exports.readFiles = function() {
-   fs.readdir(path.join(__dirname, 'public/json/schedule'), function (err, files) { 
+//TODO allow clients to update schedule.json
+
+
+exports.readFile = function() {
+   fs.readFile(path.join(__dirname, 'public/json/schedule.json'), function (err, file) { 
       if (!err) 
-         files.forEach(function (filename) {
-            if (filename && filename.indexOf('.json') !== -1) {
-               _parseSchedule(path.join(__dirname, 'public/json/schedule'), filename)
-            }
-         });
+         _parseSchedule(path.join(__dirname, 'public/json/schedule.json'));
       else
          throw err; 
    });
 }
 
-fs.watch(path.join(__dirname, 'public/json/schedule'), function (event, filename) {
-      if (filename && filename.indexOf('.json') !== -1) {
-         _parseSchedule(path.join(__dirname, 'public/json/schedule'), filename)
-      }
-});
+//fs.watchFile(path.join(__dirname, 'public/json/schedule.json'), function (curr, prev) {
+//   console.log('schedule.json updated');
+//   _parseSchedule(path.join(__dirname, 'public/json/schedule.json'));
+//});
 
-function _parseSchedule(dir, filename) {
-      console.log(filename + ' updated');
-      _loadJSON(path.join(dir, filename), function(response) {
+exports.getCurrentState = function() {
+   return currentState;
+}
+
+exports.getCurrentSchedule = function() {
+   return currentSchedule;
+}
+
+exports.setPower = _setPower
+
+function _parseSchedule(filename) {
+      _loadJSON(filename, function(response) {
          // Parse JSON string into object
          var json = JSON.parse(response);
-         var id = filename.substr(0, filename.indexOf('.'));
-        _schedulePower(id, json);
+        _schedulePower(json);
+
+        //notify clients of current state of the schedule
+        currentSchedule = json;
+        app.io.broadcast('schedule', {message: currentSchedule})
       });
 }
 
@@ -44,42 +58,55 @@ function _loadJSON(file, callback) {
       });
 }
 
-function _schedulePower(id, json) {
-
-   //iterate over on&off entries in json file
-   var jsonSchedule = json.schedule;
-
+/*
+ * Parse the JSON schedule
+ */
+function _schedulePower(json, idToSchedule) {
+   //iterate over schedule entries in json file
+   json.buttons.forEach(function (button) {
+      if (button.id === idToSchedule || typeof idToSchedule === "undefined") {
+          _scheduleButton(button);
+      }
+   });
+}
+/*
+ * Parse the JSON schedule for an individual button
+ */
+function _scheduleButton(button) {
+   var id = button.id;
+   var jsonSchedule = button.schedule;
+   
    var first = true;
    var previousTimeIsPassed = false;
    var set = false;
 
    for(var i in jsonSchedule) {
-	var time = jsonSchedule[i].time;
-	var state = jsonSchedule[i].state;
+      var time = jsonSchedule[i].time;
+      var state = jsonSchedule[i].state;
 
-        var difference = _getTimeDifference(time);
+      var difference = _getTimeDifference(time);
 
-        //if it is earlier than first time, set schedule
-        if (first && difference > 0) {
-            //earlier than first time, set schedule
+      //if it is earlier than first time, set schedule
+      if (first && difference > 0) {
+         //earlier than first time, set schedule
+         console.log(id + " scheduled for " + state + " at " + time);
+         _setPower(id, state, difference);
+         set = true;
+         break;
+      } else {
+         if (previousTimeIsPassed && difference > 0) {
+            //earlier than this time, and later than previous time, do the opposite and set schedule
             console.log(id + " scheduled for " + state + " at " + time);
             _setPower(id, state, difference);
             set = true;
             break;
-        } else {
-           if (previousTimeIsPassed && difference > 0) {
-              //earlier than this time, and later than previous time, do the opposite and set schedule
-              console.log(id + " scheduled for " + state + " at " + time);
-              _setPower(id, state, difference);
-              set = true;
-              break;
-           }
-        }
+         }
+      }
 
-        first = false;
-        if (difference < 0) {
-           previousTimeIsPassed = true;
-        }
+      first = false;
+      if (difference < 0) {
+         previousTimeIsPassed = true;
+      }
    }
 
    if (!set) {
@@ -91,16 +118,11 @@ function _schedulePower(id, json) {
    }
 }
 
-exports.getCurrentState = function() {
-   return currentState;
-}
-
-exports.setPower = _setPower
 
 function _setPower(id, state, difference) {
-
-   //if the current state is the same as the next scheduled state, do the opposite
    if (currentState.length === 0) {
+
+      //TODO read this in from some JSON file
       currentState = [
          {"id":"button1", "state":"on"}, 
          {"id":"button2", "state":"off"}, 
@@ -110,40 +132,56 @@ function _setPower(id, state, difference) {
          {"id":"button6", "state":"off"},
          {"id":"button7", "state":"off"}, 
          {"id":"button8", "state":"off"} ]
+
+       //?if the current state is the same as the next scheduled state, do the opposite
+       //lets just initialize the current state
+       for (var i = 0; i < currentState.length; i++) {
+          if (currentState[i].state === "on") {
+             _turnOnOff(currentState[i].id, currentState[i].state);
+          } 
+       }
     }
 
-   //TODO update currentstate if difference is 0;
    //else start a timer
    if (difference === 0) {
       var newState = [];
       for (var i = 0; i < currentState.length; i++) {
          if (currentState[i].id === id) {
             newState[i] = {"id":id, "state":state};
-            //temperature is on 7
-            //3,4,5,6 are lights
             _turnOnOff(id, state);
-
          } else {
             newState[i] = currentState[i];
          }
       }
       currentState = newState;
+   } else {
+      console.log('creating timer for ' + id + ' ' + state + ' ' + difference);
+      setTimeout(function() {
+         console.log('timeout for ' + id + ' ' + state);
+         _setPower(id, state, 0);
+          //parse the schedule again for this button, to find the next scheduled event
+         _parseSchedule(path.join(__dirname, 'public/json/schedule.json'), id);
+      }, difference);
    }
 
    app.io.broadcast('power', {message: currentState})
 }
 
 function _turnOnOff(id, state) {
-   gpio.open(3, "output", function(err) {        // Open pin 16 for output
-      gpio.write(3, 1, function() {            // Set pin 16 high (1)
-         if (state === "on") {
-            gpio.open(3);
-         } else {
-            gpio.close(3);                        // Close pin 16
-         }
-      });
-   });
+   console.log('turning ' + id + ' ' + state);
+   var pin = _getGPIO(id);
+   gpio.open(pin, 'output', function(err) {     // Open pin for output
+      if (state === 'on') {
+         gpio.write(pin, 1, function() {        // Set pin to high (1)
+            gpio.close(pin);                    // Close pin
+         });
+      } else {
+         gpio.write(pin, 0, function() {        // Set pin to low (0)
+            gpio.close(pin);                    // Close pin
+         });
+      }
 
+   });
 }
 
 //TODO 
@@ -160,8 +198,24 @@ function _getGPIO(id) {
 //      }
 //   }
    if (id === 'button1') {
+      return 11;
+   } else if (id === 'button2') {
+      return 12;
+   } else if (id === 'button3') {
+      return 13;
+   } else if (id === 'button4') {
+      return 15;
+   } else if (id === 'button5') {
+      return 16;
+   } else if (id === 'button6') {
+      return 18;
+   } else if (id === 'button7') {
+      return 22;
+   } else if (id === 'button8') {
+      return 21;
    }
-   return 3;
+   return -1;
+
 }
 
 /*

@@ -25,10 +25,6 @@ function poweroff(id) {
    document.getElementById(id).className = "powerbutton off";
 }
 
-function setOption(id) {
-   _setOptionButtons(id, this.optionsJSON);
-}
-
 function loadJSON(file, callback) {   
 
     var xobj = new XMLHttpRequest();
@@ -45,7 +41,71 @@ function loadJSON(file, callback) {
 
 function init() {
    _loadButtons();
-   _loadOptions();
+}
+
+function loadSchedule(json) {
+   //load time inputs based on schedule
+   json.buttons.forEach(function (button) {
+
+      var buttonElement = document.getElementById(button.id);
+
+      //get parent and remove children, except for buttonElement, which we assume is the first child
+      var nodes = buttonElement.parentNode.childNodes;
+      for(i=1; i<nodes.length; i++) {
+         buttonElement.parentNode.removeChild(nodes[i]);
+      }
+
+
+      var details = document.createElement("details");
+      var summary = document.createElement("summary");
+      summary.setAttribute("class", "powerbuttonp");
+      var cellText = document.createTextNode(buttonElement.getAttribute('data-label'));
+      summary.appendChild(cellText);
+
+      //create timer table
+      var detailsTable = document.createElement("table");
+      var timerHeadingRow = document.createElement("tr");
+      var headingOn = document.createElement("th");
+
+      //create headings
+      var textOn = document.createTextNode("on");
+      headingOn.appendChild(textOn);
+      var headingOff = document.createElement("th");
+      var textOff = document.createTextNode("off");
+      headingOff.appendChild(textOff);
+      timerHeadingRow.appendChild(headingOn);
+      timerHeadingRow.appendChild(headingOff);
+      detailsTable.appendChild(timerHeadingRow);
+
+      //iterate over the schedule in pairs of on/off times
+      var schedule = button.schedule;
+      for (var i = 0; i < schedule.length; i+=2) {
+         var schedOn = schedule[i];
+         var schedOff = schedule[i+1];
+
+         var timerRow = document.createElement("tr");
+         var cellOn = document.createElement("td");
+         var timeOn = document.createElement("input");    
+         timeOn.setAttribute("type", "time");
+         //timeOn.setAttribute("id", jsonButtons[j].id + 'on');
+         timeOn.setAttribute("value", schedOn.time);
+         cellOn.appendChild(timeOn);
+         var cellOff = document.createElement("td");
+         var timeOff = document.createElement("input");
+         timeOff.setAttribute("type", "time");
+         //timeOff.setAttribute("id", jsonButtons[j].id + 'off');
+         timeOff.setAttribute("value", schedOff.time);
+         cellOff.appendChild(timeOff);
+         timerRow.appendChild(cellOn);
+         timerRow.appendChild(cellOff);
+         detailsTable.appendChild(timerRow);
+      }
+
+      details.appendChild(detailsTable);
+      details.appendChild(summary);
+      buttonElement.parentNode.appendChild(details);
+
+   });
 }
 
 function _loadButtons() {
@@ -82,13 +142,16 @@ function _tableCreate(json) {
          button.setAttribute("type", "submit");
          button.setAttribute("id", jsonButtons[j].id);
          button.setAttribute("onclick", "power(id)");
+         button.setAttribute("data-label", jsonButtons[j].label);
          cell.appendChild(button);
 
-         var paragraph = document.createElement("p");
-         paragraph.setAttribute("class", "powerbuttonp");
-         var cellText = document.createTextNode(jsonButtons[j].label);
-         paragraph.appendChild(cellText);
-         cell.appendChild(paragraph);
+            var paragraph = document.createElement("p");
+            paragraph.setAttribute("class", "powerbuttonp");
+
+            var cellText = document.createTextNode(jsonButtons[j].label);
+            paragraph.appendChild(cellText);
+            cell.appendChild(paragraph);
+
 
          row.appendChild(cell);
       }
@@ -101,69 +164,6 @@ function _tableCreate(json) {
    tbl.appendChild(tblBody);
 }
 
-function _loadOptions() {
-   loadJSON('json/options.json', function(response) {
-      // Parse JSON string into object
-      this.optionsJSON = JSON.parse(response);
-
-      _optionsCreate(this.optionsJSON);
-   });
-}
-
-function _optionsCreate(json) {
-
-   // create elements
-   var options     = document.getElementById("options");
-   var jsonOptions = json.options;
-
-   for(var i in jsonOptions) {
-      // create options and text node 
-      var input = document.createElement("input");    
-                 
-      input.setAttribute("type", "radio");
-      input.setAttribute("id", jsonOptions[i].id);
-      input.setAttribute("onclick", "setOption(id)");
-      input.setAttribute("name", "group1");
-
-      if (jsonOptions[i].checked==="true") {
-         input.setAttribute("checked", "checked");
-         setOption(jsonOptions[i].id);
-      }
-
-      options.appendChild(input);
-
-      var label = document.createElement("label");
-      label.setAttribute("for", "rad" + jsonOptions[i].id);
-      var text = document.createTextNode(jsonOptions[i].label);
-      label.appendChild(text);
-      options.appendChild(label);
-      options.appendChild(document.createElement("br"));
-   }
-
-}
-
-function _setOptionButtons(id, json) {
-
-   // create elements
-   var options     = document.getElementById("options");
-   var jsonOptions = json.options;
-
-   for(var i in jsonOptions) {
-      var option = jsonOptions[i];
-      if (option.id===id) {
-         for(var j in option.buttons) {
-             var button = option.buttons[j];
-             if (button.state === "on") {
-                //poweron(button.id);
-             } else if (button.state === "variable") {
-                //_powervariable(button.id, button.file);
-             } else if (button.state === "off") {
-                //poweroff(button.id);
-             }
-         }
-      }
-   }
-}
 
 
 
