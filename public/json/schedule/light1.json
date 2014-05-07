@@ -1,6 +1,0 @@
-{
-   "schedule": [
-      {"time":"8:01", "state":"on"},
-      {"time":"14:00", "state":"off"}
-   ]
-}
