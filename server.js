@@ -46,11 +46,6 @@ app.put('/', function(req, res) {
       var url_parts = url.parse(req.url, true);
       var query = url_parts.query;
 
-      // gpio 7, 11, 12, 13, 15, 16, 18, 22
-
-      console.log(query);
-
-      //TODO get state, get gpio
       schedule.setPower(query.id, query.state, 0);
 
       res.end('200\n');
