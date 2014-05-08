@@ -3,38 +3,24 @@ timeOn {
    background-color: darkblue;
   }
 
-.background {
-    background-color: darkblue;
-  }
-
-label, legend, p, summary, th {
-    color: white;
-  }
-
 .powerbuttonp {
    margin-top:0px !important;
    margin-bottom:20px !important;
 }
 
-.section {
-    width: 33.33%; 
-    float:left;
-  }
-
-fieldset {
-    border:2px solid;
-    border-radius:25px;
-    color: white;
-  }
-
-.setheight { 
-    height: 200px;
-  }
-
 button {
     background-repeat:no-repeat;
     background-color: transparent;
     border: none;
+}
+
+.basediv {
+   padding-top:15px;
+   padding-bottom:15px;
+}
+
+.basetable {
+    width: 100%; 
 }
 
 .powerbutton { 
@@ -56,7 +42,42 @@ button {
     text-align: center;
   }
 
-.textOK {
-    color: lightgreen;
+.temp {
     font-size: 22px;
   }
+
+.templabel {
+     padding-left:30px;
+  }
+.OK {
+    color: green;
+  }
+
+#fileDisplayArea {
+  margin-top: 2em;
+  width: 100%;
+  overflow-x: auto;
+  }
+
+@font-face {font-family:
+    'RaphaelIcons';
+    src:
+    url('img/raphael/raphaelicons-webfont.eot');
+    src:
+    local('☺'), url('img/raphael/raphaelicons-webfont.woff') format('woff'), url('img/raphael/raphaelicons-webfont.ttf') format('truetype'), url('img/raphael/raphaelicons-webfont.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon {
+    font-weight: normal;
+    font-style: normal;
+    line-height: normal;
+    font-family: 'RaphaelIcons';
+    font-size: 2.2em;
+    position: relative;
+    top: 0.0em;
+}
+.icon-power:before { content: "G"; }
+.icon-temperature:before { content: "$"; }
+.icon-log:before { content: ">"; }

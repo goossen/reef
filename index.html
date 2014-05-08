@@ -1,6 +1,7 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="reef.css">
+<link rel="stylesheet" type="text/css" href="accordian.css">
 <script src="reef.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -40,42 +41,48 @@
 </script>
 </head>
 
-<body class="background">
-   <div style="width: 600px;">
-
-      <div>
-         <fieldset class="fieldsetcorners">
-            <legend>Power</legend>  
-            <table id="buttonstable" width="100%">
-               
-            </table>
-         </fieldset>
-      </div>
-
-      <div id="water" class="section">
-	<fieldset id="options" class="setheight">
-        <legend>Water cycle</legend>
-          
-        </fieldset>
-      </div>
-
-      <div id="temperature" class="section">
-         <fieldset class="setheight">
-            <legend>Temperature</legend>  
-            <p id="temp1" class="textOK">81.2 F</p>
-
-
-         </fieldset>
-      </div>
-
-      <div id="level" class="section">
-         <fieldset class="setheight">
-            <legend>Water Level</legend>   
-            unknown
-         </fieldset>
-      </div>
-
-   </div>
+<body>
+<ul>
+	
+	<li class="block">
+		<input type="checkbox" name="item" id="item1" checked="true"/>   
+		<label for="item1"><i aria-hidden="true" class="icon icon-power"></i> Power </label>
+		<ul class="options">
+		   <li>
+                      <div style="width: 600px;" class="basediv">
+                         <table id="buttonstable" class="basetable">
+                         </table>
+                      </div>
+                   </li>
+		</ul>
+	</li>
+	<li class="block">
+		<input type="checkbox" name="item" id="item2" checked="true" />   
+		<label for="item2"><i aria-hidden="true" class="icon icon-temperature"></i> Temperature </label>
+		<ul class="options">
+                      <div style="width: 300px;" class="basediv">
+                         <table id="buttonstable" class="basetable">
+                         <tr>
+                            <td>
+                               <p class="temp templabel">Tank</p>
+                            </td>
+                            <td>
+                               <p id="temp1" class="temp OK">81.2 F</p>
+                            </td>
+                         </tr>
+                         </table>
+                      </div>
+		</ul>
+	</li>
+	<li class="block">
+		<input type="checkbox" name="item" id="item3" />   
+		<label for="item3"><i aria-hidden="true" class="icon icon-log"></i> Log </label>
+		<ul class="options">
+                      <div id="fileDisplayArea" class="basediv">
+                      </div>
+		</ul>
+	</li>
+</ul>
 
 <script>
 init();
