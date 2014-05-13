@@ -30,6 +30,7 @@
    })  
 
    // Listen for the temperature event.
+   //TODO server should send Fahrenheit
    io.on('temperature', function(data) {
        console.log(data.message)
        var tempC = data.message.substr(data.message.indexOf(':') + 1);

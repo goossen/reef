@@ -8,16 +8,11 @@
       ]}, 
       {"id":"button2", "schedule":[
          {"time":"08:00", "state":"off"},
-         {"time":"08:02", "state":"on"},
-         {"time":"08:04", "state":"off"},
-         {"time":"08:06", "state":"on"},
-         {"time":"08:08", "state":"off"},
-         {"time":"08:10", "state":"on"},
-         {"time":"16:00", "state":"off"},
-         {"time":"16:02", "state":"on"},
-         {"time":"16:04", "state":"off"},
-         {"time":"16:06", "state":"on"},
-         {"time":"16:08", "state":"off"},
+         {"time":"08:02", "state":"on"},{"time":"08:04", "state":"off"},
+         {"time":"08:06", "state":"on"},{"time":"08:08", "state":"off"},
+         {"time":"08:10", "state":"on"},{"time":"16:00", "state":"off"},
+         {"time":"16:02", "state":"on"},{"time":"16:04", "state":"off"},
+         {"time":"16:06", "state":"on"},{"time":"16:08", "state":"off"},
          {"time":"16:10", "state":"on"}
       ]}, 
       {"id":"button6", "schedule":[

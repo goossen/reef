@@ -3,7 +3,7 @@ var express = require('express.io'),
     path = require('path');
 
 var temp = require('./temperature.js'),
-    schedule = require('./schedule.js');
+    scheduler = require('./scheduler.js');
 
 app = require('express.io')()
 app.http().io()
@@ -14,7 +14,7 @@ app.configure(function(){
    app.use(express.static(path.join(__dirname, 'public')));
 
    //read all schedule .json files
-   schedule.readFile();
+   scheduler.readFile();
 
    // Log the temperation at a set interval
    temp.startLogging();
@@ -23,12 +23,12 @@ app.configure(function(){
 // Setup the ready route, and emit talk event.
 app.io.route('ready', function(req) {
 
-   var currentState = schedule.getCurrentState();
+   var currentState = scheduler.getCurrentState();
    req.io.emit('power', { 
       message: currentState
    })
 
-   var currentSchedule = schedule.getCurrentSchedule();
+   var currentSchedule = scheduler.getCurrentSchedule();
    req.io.emit('schedule', { 
       message: currentSchedule
    })
@@ -46,7 +46,7 @@ app.put('/', function(req, res) {
       var url_parts = url.parse(req.url, true);
       var query = url_parts.query;
 
-      schedule.setPower(query.id, query.state, 0);
+      scheduler.setPower(query.id, query.state, 0);
 
       res.end('200\n');
 })

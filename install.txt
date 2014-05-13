@@ -3,13 +3,13 @@ cd to directory
 /opt/node/bin/npm install
 /opt/node/bin/node server.js
 
-_____________________-
+_____________________
 
-# install npm, git
-apt-get install npm
+
+# install git
 apt-get install git
 
-#install nvm, node
+#install node
 sudo mkdir /opt/node
 wget http://nodejs.org/dist/v0.11.10/node-v0.11.10-linux-arm-pi.tar.gz
 tar xvzf node-v0.11.10-linux-arm-pi.tar.gz
@@ -17,10 +17,6 @@ sudo cp -r node-v0.11.10-linux-arm-pi/* /opt/node
 rm -rf node-v0.11.10-linux-arm-pi
 rm -rf node-v0.11.10-linux-arm-pi.tar.gz
 
-
-npm install ds18b20
-npm install socket.io
-npm install express
 
 nano /etc/profile
 # add these lines before export PATH

@@ -6,6 +6,7 @@
     "dependencies": {
         "ds18b20": "latest",
         "express.io":"latest",
-        "pi-gpio":"latest"
+        "pi-gpio":"latest",
+        "node-schedule": "latest"
     }
 }
