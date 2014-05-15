@@ -167,11 +167,15 @@ function _setPower(id, state) {
       for(var i in jsonRows) {
          var jsonButtons = jsonRows[i].buttons;
          for (var j in jsonButtons) {
+            var id = jsonButtons[j].id;
             var state = jsonButtons[j].state;
             if (state === 'variable') {
                state = 'off';
+            } else {
+               //power on or off, according to buttons.json
+               _turnOnOff(id, state);
             }
-            currentState[counter++] = {"id":jsonButtons[j].id, "state":state};
+            currentState[counter++] = {"id":id, "state":state};
          }
       }
    }
