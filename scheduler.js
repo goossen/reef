@@ -173,6 +173,7 @@ function _setPower(id, state) {
                state = 'off';
             } else {
                //power on or off, according to buttons.json
+               console.log('setting initial state for ' + id + ' ' + state);
                _turnOnOff(id, state);
             }
             currentState[counter++] = {"id":id, "state":state};

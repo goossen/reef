@@ -45,6 +45,11 @@ app.get('/reef.js', function(req, res) {
     res.sendfile(__dirname + '/reef.js')
 })
 
+// Send the nodejs.log.
+app.get('/nodejs.log', function(req, res) { 
+    res.sendfile(__dirname + '/nodejs.log')
+})
+
 // REST API
 // Turn on/off power
 app.put('/', function(req, res) { 
