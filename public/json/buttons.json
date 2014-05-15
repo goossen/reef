@@ -1,16 +1,16 @@
 {
    "rows": [
       {"buttons":[
-         {"id":"button1", "gpio":"7", "label":"day light", "state":"variable"}, 
-         {"id":"button2", "gpio":"11", "label":"pump 1", "state":"variable"}, 
-         {"id":"button3", "gpio":"12", "label":"pump 3", "state":"off"}, 
-         {"id":"button4", "gpio":"13", "label":"sump/skimmer", "state":"on"}
+         {"id":"button1", "gpio":"11", "label":"day light", "state":"variable"}, 
+         {"id":"button2", "gpio":"12", "label":"pump 1", "state":"variable"}, 
+         {"id":"button3", "gpio":"13", "label":"pump 3", "state":"off"}, 
+         {"id":"button4", "gpio":"15", "label":"sump/skimmer", "state":"on"}
       ]}, 
       {"buttons":[
-         {"id":"button5", "gpio":"18", "label":"night light", "state":"variable"}, 
-         {"id":"button6", "gpio":"22", "label":"pump 2", "state":"variable"}, 
-         {"id":"button7", "gpio":"23", "label":"PO4 reactor", "state":"on"}, 
-         {"id":"button8", "gpio":"24", "label":"heater", "state":"on"}
+         {"id":"button5", "gpio":"16", "label":"night light", "state":"variable"}, 
+         {"id":"button6", "gpio":"18", "label":"pump 2", "state":"variable"}, 
+         {"id":"button7", "gpio":"22", "label":"PO4 reactor", "state":"on"}, 
+         {"id":"button8", "gpio":"21", "label":"heater", "state":"on"}
       ]}
    ]
 }

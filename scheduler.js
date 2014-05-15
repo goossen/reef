@@ -4,31 +4,41 @@ var fs = require('fs'),
     schedule = require('node-schedule');
 
 // Array of current power on/off state, so that clients can be told about this when they connect
-var currentState = [];
+var currentState;
 
-// TODO Array of scheduled power on/off events, so that they can be canceled if scheduling changes
-var timers = [];
+//TODO Allow clients to update schedule.json
+//Array of scheduled power on/off events, so that they can be canceled if scheduling changes
+//var timers = [];
+
 //current state of schedule
-var currentSchedule;
+var scheduleJSON;
 
-//TODO allow clients to update schedule.json
+//keep the state of the buttons.json file in memory
+var buttonsJSON;
 
-//fs.watchFile(path.join(__dirname, 'public/json/schedule.json'), function (curr, prev) {
-//   console.log('schedule.json updated');
-//   _parseSchedule(path.join(__dirname, 'public/json/schedule.json'));
-//});
+fs.watchFile(path.join(__dirname, 'public/json/buttons.json'), function (curr, prev) {
+   console.log('buttons.json updated');
+   _readButtons();
+});
 
-function _parseSchedule(filename, idToSchedule) {
-      _loadJSON(filename, function(response) {
-         // Parse JSON string into object
-         var json = JSON.parse(response);
-        _schedulePower(json, idToSchedule);
-
-        //notify clients of current state of the schedule
-        currentSchedule = json;
-        app.io.broadcast('schedule', {message: currentSchedule})
-      });
+function _readButtons() {
+   _loadJSON(path.join(__dirname, 'public/json/buttons.json'), function(response) {
+      this.buttonsJSON = JSON.parse(response);
+   });
 }
+
+function _readSchedule() {
+   _loadJSON(path.join(__dirname, 'public/json/schedule.json'), function(response) {
+      // Parse JSON string into object
+      var json = JSON.parse(response);
+      _schedulePower(json);
+
+      //notify clients of current state of the schedule
+      this.scheduleJSON = json;
+      app.io.broadcast('schedule', {message: this.scheduleJSON})
+   });
+}
+
 
 function _loadJSON(file, callback) {
       fs.readFile(file, 'utf8', function (err, data) {
@@ -40,24 +50,13 @@ function _loadJSON(file, callback) {
       });
 }
 
-
-function _parseSchedule(filename, idToSchedule) {
-      _loadJSON(filename, function(response) {
-         // Parse JSON string into object
-         var json = JSON.parse(response);
-        _schedulePower(json, idToSchedule);
-      });
-}
-
 /*
  * Parse the JSON schedule
  */
-function _schedulePower(json, idToSchedule) {
+function _schedulePower(json) {
    //iterate over schedule entries in json file
    json.buttons.forEach(function (button) {
-      if (button.id === idToSchedule || typeof idToSchedule === "undefined") {
-          _scheduleButton(button);
-      }
+       _scheduleButton(button);
    });
 
    if (!this.initialized) {
@@ -159,19 +158,23 @@ function _scheduleJob(id, time, state) {
 }
 
 function _setPower(id, state) {
+   if (currentState === undefined || currentState.length === 0) {
+      //read this in from buttons.json file for those buttons which are not scheduled
+      var jsonRows = this.buttonsJSON.rows;
 
-   if (currentState.length === 0) {
-      //TODO read this in from buttons.json file for those buttons which are not scheduled
-      currentState = [
-         {"id":"button1", "state":"off"}, 
-         {"id":"button2", "state":"off"}, 
-         {"id":"button3", "state":"off"}, 
-         {"id":"button4", "state":"off"}, 
-         {"id":"button5", "state":"off"}, 
-         {"id":"button6", "state":"off"},
-         {"id":"button7", "state":"off"}, 
-         {"id":"button8", "state":"off"} ]
-    }
+      currentState = [];
+      var counter = 0;
+      for(var i in jsonRows) {
+         var jsonButtons = jsonRows[i].buttons;
+         for (var j in jsonButtons) {
+            var state = jsonButtons[j].state;
+            if (state === 'variable') {
+               state = 'off';
+            }
+            currentState[counter++] = {"id":jsonButtons[j].id, "state":state};
+         }
+      }
+   }
 
    //just set the power
    var newState = [];
@@ -201,42 +204,21 @@ function _turnOnOff(id, state) {
             gpio.close(pin);                    // Close pin
          });
       }
-
    });
 }
 
-//TODO 
 function _getGPIO(id) {
-//   //get the GPIO pin number
-//   var jsonRows = this.buttonsJSON.rows;
-//
-//   for(var i in jsonRows) {
-//      var jsonButtons = jsonRows[i].buttons;
-//      for (var j in jsonButtons) {
-//         if (jsonButtons[j].id === id) {
-//            return jsonButtons[j].gpio;
-//         }
-//      }
-//   }
-   if (id === 'button1') {
-      return 11;
-   } else if (id === 'button2') {
-      return 12;
-   } else if (id === 'button3') {
-      return 13;
-   } else if (id === 'button4') {
-      return 15;
-   } else if (id === 'button5') {
-      return 16;
-   } else if (id === 'button6') {
-      return 18;
-   } else if (id === 'button7') {
-      return 22;
-   } else if (id === 'button8') {
-      return 21;
-   }
-   return -1;
+   //get the GPIO pin number
+   var jsonRows = this.buttonsJSON.rows;
 
+   for(var i in jsonRows) {
+      var jsonButtons = jsonRows[i].buttons;
+      for (var j in jsonButtons) {
+         if (jsonButtons[j].id === id) {
+            return jsonButtons[j].gpio;
+         }
+      }
+   }
 }
 
 /*
@@ -258,13 +240,9 @@ function _getTimeDifference(time) {
 }
 
 /* Public API */
-exports.readFile = function() {
-   fs.readFile(path.join(__dirname, 'public/json/schedule.json'), function (err, file) { 
-      if (!err) 
-         _parseSchedule(path.join(__dirname, 'public/json/schedule.json'));
-      else
-         throw err; 
-   });
+exports.readFiles = function() {
+   _readButtons();
+   _readSchedule();
 }
 
 exports.getCurrentState = function() {
@@ -272,7 +250,7 @@ exports.getCurrentState = function() {
 }
 
 exports.getCurrentSchedule = function() {
-   return currentSchedule;
+   return this.scheduleJSON;
 }
 
 exports.setPower = _setPower

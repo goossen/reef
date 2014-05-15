@@ -12,7 +12,8 @@ function _getTemperature() {
          value = 0;
       }
 
-      app.io.broadcast('temperature', {message: '28-000005be269d' + ':' +  value})
+      var tempF=value * 9 / 5 + 32;
+      app.io.broadcast('temperature', {message: '28-000005be269d' + ':' +  Math.round(tempF * 10) / 10})
    });
 }
 

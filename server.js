@@ -14,7 +14,7 @@ app.configure(function(){
    app.use(express.static(path.join(__dirname, 'public')));
 
    //read all schedule .json files
-   scheduler.readFile();
+   scheduler.readFiles();
 
    // Log the temperation at a set interval
    temp.startLogging();
@@ -38,6 +38,11 @@ app.io.route('ready', function(req) {
 // Send the client html.
 app.get('/', function(req, res) { 
     res.sendfile(__dirname + '/index.html')
+})
+
+// Send the client side js.
+app.get('/reef.js', function(req, res) { 
+    res.sendfile(__dirname + '/reef.js')
 })
 
 // REST API

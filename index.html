@@ -13,6 +13,7 @@
    // Listen for the power event.
    io.on('power', function(data) {
        var buttons = data.message;
+       console.log(buttons);
        buttons.forEach(function (button) {
           console.log(button.id + ' ' + button.state);
           if (button.state === "on") {
@@ -30,13 +31,10 @@
    })  
 
    // Listen for the temperature event.
-   //TODO server should send Fahrenheit
    io.on('temperature', function(data) {
        console.log(data.message)
-       var tempC = data.message.substr(data.message.indexOf(':') + 1);
-       console.log(tempC)
-       var tempF=tempC * 9 / 5 + 32;
-       document.getElementById("temp1").innerHTML = Math.round(tempF * 10) / 10 + " F";
+       var tempF = data.message.substr(data.message.indexOf(':') + 1);
+       document.getElementById("temp1").innerHTML = tempF + " F";
    })  
 
 </script>
