@@ -33,6 +33,7 @@ app.io.route('ready', function(req) {
       message: currentSchedule
    })
 
+   temp.getTemperatures();
 })
 
 // Send the client html.

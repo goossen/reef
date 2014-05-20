@@ -69,4 +69,8 @@ exports.startLogging = function() {
    }, 15000);
 }
 
+exports.getTemperatures = function() {
+   _getTemperatures();
+}
+
 
