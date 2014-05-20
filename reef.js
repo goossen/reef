@@ -54,7 +54,6 @@ function loadSchedule(json) {
          buttonElement.parentNode.removeChild(nodes[i]);
       }
 
-
       var details = document.createElement("details");
       var summary = document.createElement("summary");
       summary.setAttribute("class", "powerbuttonp");
@@ -107,6 +106,38 @@ function loadSchedule(json) {
    });
 }
 
+function updateTemperatureTable(label, temperature) {
+   var row = document.getElementById(label);
+
+   if (row) {
+      //update temperature
+      document.getElementById('temp' + label).innerHTML = temperature + " F";
+   } else {
+      //create new row
+      var table = document.getElementById('temptable');
+      var row = document.createElement("tr");
+      row.setAttribute("id", label);
+
+      var cellLabel = document.createElement("td");
+      var paragraph = document.createElement("p");
+      paragraph.setAttribute("class", "temp templabel");
+      var cellText = document.createTextNode(jsonButtons[j].label);
+      paragraph.appendChild(cellText);
+      cell.appendChild(paragraph);
+      row.appendChild(cell);
+
+      var cellLabel = document.createElement("td");
+      var paragraph = document.createElement("p");
+      paragraph.setAttribute("class", "temp OK");
+      var cellText = document.createTextNode(temperature + " F");
+      paragraph.appendChild(cellText);
+      cell.appendChild(paragraph);
+      row.appendChild(cell);
+
+      table.appendChild(row);
+   }
+}
+
 function _loadButtons() {
    loadJSON('json/buttons.json', function(response) {
       // Parse JSON string into object
@@ -144,13 +175,12 @@ function _tableCreate(json) {
          button.setAttribute("data-label", jsonButtons[j].label);
          cell.appendChild(button);
 
-            var paragraph = document.createElement("p");
-            paragraph.setAttribute("class", "powerbuttonp");
+         var paragraph = document.createElement("p");
+         paragraph.setAttribute("class", "powerbuttonp");
 
-            var cellText = document.createTextNode(jsonButtons[j].label);
-            paragraph.appendChild(cellText);
-            cell.appendChild(paragraph);
-
+         var cellText = document.createTextNode(jsonButtons[j].label);
+         paragraph.appendChild(cellText);
+         cell.appendChild(paragraph);
 
          row.appendChild(cell);
       }

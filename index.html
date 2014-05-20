@@ -33,8 +33,10 @@
    // Listen for the temperature event.
    io.on('temperature', function(data) {
        console.log(data.message)
-       var tempF = data.message.substr(data.message.indexOf(':') + 1);
-       document.getElementById("temp1").innerHTML = tempF + " F";
+       var messages = data.message.split(':');
+       var label = messages[0];
+       var tempF = messages[1];
+       updateTemperatureTable(label, temp);
    })  
 
 </script>
@@ -60,15 +62,7 @@
 		<label for="item2"><i aria-hidden="true" class="icon icon-temperature"></i> Temperature </label>
 		<ul class="options">
                       <div style="width: 300px;" class="basediv">
-                         <table id="buttonstable" class="basetable">
-                         <tr>
-                            <td>
-                               <p class="temp templabel">Tank</p>
-                            </td>
-                            <td>
-                               <p id="temp1" class="temp OK">81.2 F</p>
-                            </td>
-                         </tr>
+                         <table id="temptable" class="basetable">
                          </table>
                       </div>
 		</ul>
