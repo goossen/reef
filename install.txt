@@ -8,7 +8,7 @@ _____________________
 
 #git checkin
 git add .
-git commit -m "push power state"
+git commit -m "update readme"
 git push -u origin master
 
 #git checkout
