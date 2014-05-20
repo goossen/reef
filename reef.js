@@ -121,18 +121,18 @@ function updateTemperatureTable(label, temperature) {
       var cellLabel = document.createElement("td");
       var paragraph = document.createElement("p");
       paragraph.setAttribute("class", "temp templabel");
-      var cellText = document.createTextNode(jsonButtons[j].label);
+      var cellText = document.createTextNode(label);
       paragraph.appendChild(cellText);
-      cell.appendChild(paragraph);
-      row.appendChild(cell);
+      cellLabel.appendChild(paragraph);
+      row.appendChild(cellLabel);
 
-      cellLabel = document.createElement("td");
+      var cellTemp = document.createElement("td");
       paragraph = document.createElement("p");
       paragraph.setAttribute("class", "temp OK");
       cellText = document.createTextNode(temperature + " F");
       paragraph.appendChild(cellText);
-      cell.appendChild(paragraph);
-      row.appendChild(cell);
+      cellTemp.appendChild(paragraph);
+      row.appendChild(cellTemp);
 
       table.appendChild(row);
    }
