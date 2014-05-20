@@ -21,8 +21,8 @@ The user interface is html, css and straight javascript.  express.io is used to 
 ## Installation
 
 ### Clone the git repository
-⋅⋅* cd into the parent directory you want to install the project in
-⋅⋅* git clone the project into a child directory
+  * cd into the parent directory you want to install the project in
+  * git clone the project into a child directory
 
 All dependencies are copied as a part of the clone operation.
 
