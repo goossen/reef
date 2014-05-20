@@ -6,40 +6,6 @@ cd to directory
 _____________________
 
 
-# install git
-apt-get install git
-
-#install node
-sudo mkdir /opt/node
-wget http://nodejs.org/dist/v0.11.10/node-v0.11.10-linux-arm-pi.tar.gz
-tar xvzf node-v0.11.10-linux-arm-pi.tar.gz
-sudo cp -r node-v0.11.10-linux-arm-pi/* /opt/node
-rm -rf node-v0.11.10-linux-arm-pi
-rm -rf node-v0.11.10-linux-arm-pi.tar.gz
-
-
-nano /etc/profile
-# add these lines before export PATH
-NODE_JS_HOME="/opt/node"
-PATH="$PATH:$NODE_JS_HOME/bin"
-
-logout
-
-#setup gpio privileges
-git clone git://github.com/quick2wire/quick2wire-gpio-admin.git
-cd quick2wire-gpio-admin
-make
-sudo make install
-sudo adduser $USER gpio
-
-#add nodejs.sh
-
-chmod 755 nodejs.sh
-sudo cp nodejs.sh /etc/init.d
-sudo update-rc.d nodejs.sh defaults
-
-sudo /etc/init.d/nodejs.sh start
-
 #git checkin
 git add .
 git commit -m "push power state"

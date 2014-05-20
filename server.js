@@ -46,7 +46,7 @@ app.get('/reef.js', function(req, res) {
 })
 
 // Send the nodejs.log.
-app.get('/nodejs.log', function(req, res) { 
+app.get('/log', function(req, res) { 
     res.sendfile(__dirname + '/nodejs.log')
 })
 
