@@ -107,11 +107,11 @@ function loadSchedule(json) {
 }
 
 function updateTemperatureTable(label, temperature) {
-   var row = document.getElementById(label);
+   var existing = document.getElementById('temp' + label);
 
-   if (row) {
+   if (existing) {
       //update temperature
-      document.getElementById('temp' + label).innerHTML = temperature + " F";
+      existing.innerHTML = temperature + " F";
    } else {
       //create new row
       var table = document.getElementById('temptable');
@@ -126,10 +126,10 @@ function updateTemperatureTable(label, temperature) {
       cell.appendChild(paragraph);
       row.appendChild(cell);
 
-      var cellLabel = document.createElement("td");
-      var paragraph = document.createElement("p");
+      cellLabel = document.createElement("td");
+      paragraph = document.createElement("p");
       paragraph.setAttribute("class", "temp OK");
-      var cellText = document.createTextNode(temperature + " F");
+      cellText = document.createTextNode(temperature + " F");
       paragraph.appendChild(cellText);
       cell.appendChild(paragraph);
       row.appendChild(cell);
