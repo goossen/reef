@@ -34,8 +34,6 @@
    io.on('temperature', function(data) {
        console.log(data.message)
        var messages = data.message.split(':');
-       var label = messages[0];
-       var temp = messages[1];
        updateTemperatureTable(label, temp);
    })  
 

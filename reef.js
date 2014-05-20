@@ -107,7 +107,7 @@ function loadSchedule(json) {
 }
 
 function updateTemperatureTable(label, temperature) {
-   var existing = document.getElementById('temp' + label);
+   var existing = document.getElementById('temperature' + label);
 
    if (existing) {
       //update temperature
@@ -129,6 +129,7 @@ function updateTemperatureTable(label, temperature) {
       var cellTemp = document.createElement("td");
       paragraph = document.createElement("p");
       paragraph.setAttribute("class", "temp OK");
+      paragraph.setAttribute("id", 'temperature' + label);
       cellText = document.createTextNode(temperature + " F");
       paragraph.appendChild(cellText);
       cellTemp.appendChild(paragraph);
