@@ -16,7 +16,7 @@ Temperature sensors are connected to the RPi and monitor the current water tempe
 ### User Interface
 The user interface is html, css and straight javascript.  express.io is used to push updates from the server to connected clients.
 
-![ScreenShot](https://raw.github.com/goossen/reef/screenshots/screenshot1.png)
+![ScreenShot](https://raw.github.com/goossen/reef/master/screenshot1.png)
 
 ## Installation
 
