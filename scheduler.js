@@ -22,13 +22,13 @@ fs.watchFile(path.join(__dirname, 'public/json/buttons.json'), function (curr, p
 });
 
 function _readButtons() {
-   _loadJSON(path.join(__dirname, 'public/json/buttons.json'), function(response) {
+   _loadFile(path.join(__dirname, 'public/json/buttons.json'), function(response) {
       this.buttonsJSON = JSON.parse(response);
    });
 }
 
 function _readSchedule() {
-   _loadJSON(path.join(__dirname, 'public/json/schedule.json'), function(response) {
+   _loadFile(path.join(__dirname, 'public/json/schedule.json'), function(response) {
       // Parse JSON string into object
       var json = JSON.parse(response);
       _schedulePower(json);
@@ -40,7 +40,7 @@ function _readSchedule() {
 }
 
 
-function _loadJSON(file, callback) {
+function _loadFile(file, callback) {
       fs.readFile(file, 'utf8', function (err, data) {
          if (err) {
             console.log('Error: ' + err);
@@ -200,7 +200,7 @@ function _turnOnOff(id, state) {
    console.log('turning ' + id + ' ' + state);
    var pin = _getGPIO(id);
    gpio.open(pin, 'output', function(err) {     // Open pin for output
-      if (state === 'on') {
+      if (state === 'off') {
          gpio.write(pin, 1, function() {        // Set pin to high (1)
             gpio.close(pin);                    // Close pin
          });

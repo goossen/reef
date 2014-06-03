@@ -13,12 +13,12 @@ fs.watchFile(path.join(__dirname, 'public/json/sensors.json'), function (curr, p
 });
 
 function _readJSON() {
-   _loadJSON(path.join(__dirname, 'public/json/sensors.json'), function(response) {
+   _loadFile(path.join(__dirname, 'public/json/sensors.json'), function(response) {
       this.sensorsJSON = JSON.parse(response);
    });
 }
 
-function _loadJSON(file, callback) {
+function _loadFile(file, callback) {
    fs.readFile(file, 'utf8', function (err, data) {
       if (err) {
          console.log('Error: ' + err);

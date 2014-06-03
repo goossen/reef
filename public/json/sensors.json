@@ -1,6 +1,6 @@
 {
    "sensors": [
-      {"id":"28-000005be269d", "label":"tank"},
-      {"id":"28-000005bde5e8", "label":"room"}
+      {"id":"28-000005bdf942", "label":"tank"},
+      {"id":"28-000005be9cde", "label":"room"}
    ]
 }

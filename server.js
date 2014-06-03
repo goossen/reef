@@ -3,7 +3,8 @@ var express = require('express.io'),
     path = require('path');
 
 var temp = require('./temperature.js'),
-    scheduler = require('./scheduler.js');
+    scheduler = require('./scheduler.js'),
+    maintenance = require('./maintenance.js');
 
 app = require('express.io')()
 app.http().io()
@@ -32,6 +33,8 @@ app.io.route('ready', function(req) {
    req.io.emit('schedule', { 
       message: currentSchedule
    })
+
+   maintenance.getLog();
 
    temp.getTemperatures();
 })

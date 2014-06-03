@@ -37,6 +37,12 @@
        updateTemperatureTable(messages[0], messages[1]);
    })  
 
+   // Listen for the maintenance event.
+   io.on('maintenance', function(data) {
+       //load time inputs based on schedule
+       loadMaintenance(data.message);
+   })  
+
 </script>
 </head>
 
@@ -69,7 +75,9 @@
 		<input type="checkbox" name="item" id="item3" />   
 		<label for="item3"><i aria-hidden="true" class="icon icon-log"></i> Log </label>
 		<ul class="options">
-                      <div id="fileDisplayArea" class="basediv">
+                      <div id="fileDisplayArea" class="basediv filearea">
+                         <textarea id="maintenanceLog">
+                         </textarea>
                       </div>
 		</ul>
 	</li>

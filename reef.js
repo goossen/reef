@@ -40,6 +40,7 @@ function loadJSON(file, callback) {
 
 function init() {
    _loadButtons();
+   _loadMaintenanceLog();
 }
 
 function loadSchedule(json) {
@@ -104,6 +105,11 @@ function loadSchedule(json) {
       buttonElement.parentNode.appendChild(details);
 
    });
+}
+
+function loadMaintenance(contents) {
+   var textArea = document.getElementById('maintenanceLog');
+   textArea.innerHTML = contents;
 }
 
 function updateTemperatureTable(label, temperature) {
