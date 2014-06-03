@@ -158,6 +158,25 @@ function _scheduleJob(id, time, state) {
 }
 
 function _setPower(id, state) {
+
+   _setInitialState(); //this only does something the first time
+
+   //just set the power
+   var newState = [];
+   for (var i = 0; i < currentState.length; i++) {
+      if (currentState[i].id === id) {
+         newState[i] = {"id":id, "state":state};
+         _turnOnOff(id, state);
+      } else {
+         newState[i] = currentState[i];
+      }
+   }
+   currentState = newState;
+
+   app.io.broadcast('power', {message: currentState})
+}
+
+function _setInitialState() {
    if (currentState === undefined || currentState.length === 0) {
       //read this in from buttons.json file for those buttons which are not scheduled
       var jsonRows = this.buttonsJSON.rows;
@@ -180,20 +199,6 @@ function _setPower(id, state) {
          }
       }
    }
-
-   //just set the power
-   var newState = [];
-   for (var i = 0; i < currentState.length; i++) {
-      if (currentState[i].id === id) {
-         newState[i] = {"id":id, "state":state};
-         _turnOnOff(id, state);
-      } else {
-         newState[i] = currentState[i];
-      }
-   }
-   currentState = newState;
-
-   app.io.broadcast('power', {message: currentState})
 }
 
 function _turnOnOff(id, state) {
