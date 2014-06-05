@@ -1,10 +1,10 @@
 {
    "buttons": [
       {"id":"button1", "schedule":[
-         {"time":"09:00", "state":"on"},{"time":"16:00", "state":"off"}
+         {"time":"11:00", "state":"on"},{"time":"18:00", "state":"off"}
       ]}, 
       {"id":"button5", "schedule":[
-         {"time":"08:00", "state":"on"},{"time":"22:00", "state":"off"}
+         {"time":"08:00", "state":"on"},{"time":"21:30", "state":"off"}
       ]}, 
       {"id":"button2", "schedule":[
          {"time":"08:00", "state":"off"},

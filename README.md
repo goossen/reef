@@ -13,6 +13,8 @@ The GPIO pins are controlled using the pi-gpio library.  The usage is based on a
 ### Temperature monitoring
 Temperature sensors are connected to the RPi and monitor the current water temperature.  The temperature sensor can be used as a failsafe for the aquarium heater.  The temperature sensor(s) uses the ds18b20 library.  An example of its usage is give here: https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing?view=all
 
+![Insides](https://raw.github.com/goossen/reef/master/insides.jpg)
+
 ### User Interface
 The user interface is html, css and straight javascript.  express.io is used to push updates from the server to connected clients.
 
