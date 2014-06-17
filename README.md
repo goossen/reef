@@ -31,11 +31,11 @@ All dependencies are copied as a part of the clone operation.
 ### Install node (Raspberry Pi flavor)
 ```Shell
 sudo mkdir /opt/node
-wget http://nodejs.org/dist/v0.11.10/node-v0.11.10-linux-arm-pi.tar.gz
-tar xvzf node-v0.11.10-linux-arm-pi.tar.gz
-sudo cp -r node-v0.11.10-linux-arm-pi/* /opt/node
-rm -rf node-v0.11.10-linux-arm-pi
-rm -rf node-v0.11.10-linux-arm-pi.tar.gz
+wget http://nodejs.org/dist/v0.10.24/node-v0.10.24-linux-arm-pi.tar.gz
+tar xvzf node-v0.10.24-linux-arm-pi.tar.gz
+sudo cp -r node-v0.10.24-linux-arm-pi/* /opt/node
+rm -rf node-v0.10.24-linux-arm-pi
+rm -rf node-v0.10.24-linux-arm-pi.tar.gz
 ```
 
 ### Add node to your path
@@ -59,6 +59,13 @@ sudo adduser $USER gpio
 chmod 755 nodejs.sh
 sudo cp nodejs.sh /etc/init.d
 sudo update-rc.d nodejs.sh defaults
+```
+
+### Set wifi_drop.sh startup behavior
+```Shell
+chmod 755 wifi_drop.sh
+sudo cp wifi_drop.sh /etc/init.d
+sudo update-rc.d wifi_drop.sh defaults
 ```
 
 
