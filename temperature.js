@@ -2,6 +2,8 @@ var fs = require('fs'),
     path = require('path'),
     sensor = require('ds18b20');
 
+var scheduler = require('./scheduler.js');
+
 var currentState = [];
 
 //keep the state of the buttons.json file in memory
@@ -56,10 +58,31 @@ function _sense(id) {
          });
 
          var tempF=result * 9 / 5 + 32;
+
+         //controller fan & heater
+         _controlTemp(label, tempF);
+         //log temps to file
+         _logTemp(label, tempF);
          
          app.io.broadcast('temperature', {message: label + ':' +  Math.round(tempF * 10) / 10})
       }
    });
+}
+
+function _controlTemp(label, tempF) {
+   if (label === 'tank') {
+      if (tempF > 80.5) {
+         scheduler.setPower(3, 'on');
+      } else if (tempF < 80.0) {
+         scheduler.setPower(3, 'off');
+      }
+   }   
+}
+
+function _logTemp(label, tempF) {
+//Date,Series1,Series2
+//2009/07/12,100,200  # comments are OK on data lines
+//2009/07/19,150,201
 }
 
 exports.startLogging = function() {

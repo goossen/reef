@@ -162,18 +162,22 @@ function _setPower(id, state) {
    _setInitialState(); //this only does something the first time
 
    //just set the power
+   var changed = false;
    var newState = [];
    for (var i = 0; i < currentState.length; i++) {
       if (currentState[i].id === id) {
          newState[i] = {"id":id, "state":state};
          _turnOnOff(id, state);
+         changed = true;
       } else {
          newState[i] = currentState[i];
       }
    }
-   currentState = newState;
 
-   app.io.broadcast('power', {message: currentState})
+   if (changed) {
+      currentState = newState;
+      app.io.broadcast('power', {message: currentState})
+   }
 }
 
 function _setInitialState() {

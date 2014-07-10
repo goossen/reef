@@ -3,7 +3,7 @@
       {"buttons":[
          {"id":"button1", "gpio":"11", "label":"day light", "state":"variable"}, 
          {"id":"button2", "gpio":"12", "label":"pump 1", "state":"variable"}, 
-         {"id":"button3", "gpio":"13", "label":"pump 3", "state":"off"}, 
+         {"id":"button3", "gpio":"13", "label":"fan", "state":"off"}, 
          {"id":"button4", "gpio":"15", "label":"sump/skimmer", "state":"on"}
       ]}, 
       {"buttons":[

@@ -60,7 +60,7 @@ app.put('/', function(req, res) {
       var url_parts = url.parse(req.url, true);
       var query = url_parts.query;
 
-      scheduler.setPower(query.id, query.state, 0);
+      scheduler.setPower(query.id, query.state);
 
       res.end('200\n');
 })
