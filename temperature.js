@@ -186,7 +186,7 @@ exports.startLogging = function() {
 
    _getTemperatures();
 
-   _email("Temperature logging started at " + new Date().toLocaleString());
+   emailer.email("Temperature logging started at " + new Date().toLocaleString());
 }
 
 exports.getTemperatures = function() {

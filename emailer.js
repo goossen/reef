@@ -11,12 +11,12 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-function email(messageBody) {
+function _email(messageBody) {
 
    // setup e-mail data with unicode symbols
    var mailOptions = {
-      from: 'pi <' + emailUser + '>', // sender address
-      to: emailUser, // list of receivers
+      from: 'pi <' + config.emailUser + '>', // sender address
+      to: config.emailUser, // list of receivers
       subject: 'Aquarium status ✔', // Subject line
       text: messageBody, // plaintext body
       html: messageBody // html body
@@ -31,4 +31,8 @@ function email(messageBody) {
       }
    });
 }
+
+exports.email = _email;
+
+
 
