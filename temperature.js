@@ -1,10 +1,31 @@
 var fs = require('fs'),
     path = require('path'),
-    sensor = require('ds18b20');
+    sensor = require('ds18b20'),
+    nodeschedule = require('node-schedule');
+
+var emailer = require('./emailer.js');
+
+// setup a recurring job to log temperatures every hour
+var rule1 = new nodeschedule.RecurrenceRule();
+rule1.minute = 0;
+
+var j = nodeschedule.scheduleJob(rule1, function(){
+    _logTempsToFile();
+});
+
+// setup a recurring job to send emails every day at 6PM
+var rule2 = new nodeschedule.RecurrenceRule();
+rule2.hour = 18;
+rule2.minute=0;
+
+var j = nodeschedule.scheduleJob(rule2, function(){
+    _emailTemps();
+});
 
 var scheduler = require('./scheduler.js');
 
 var currentState = [];
+var dailyState = [];
 
 //keep the state of the buttons.json file in memory
 var sensorsJSON;
@@ -58,13 +79,15 @@ function _sense(id) {
          });
 
          var tempF=result * 9 / 5 + 32;
+         tempF = Math.round(tempF * 10) / 10;
 
          //controller fan & heater
          _controlTemp(label, tempF);
+
          //log temps to file
          _logTemp(label, tempF);
          
-         app.io.broadcast('temperature', {message: label + ':' +  Math.round(tempF * 10) / 10})
+         app.io.broadcast('temperature', {message: label + ':' + tempF})
       }
    });
 }
@@ -72,24 +95,98 @@ function _sense(id) {
 function _controlTemp(label, tempF) {
    if (label === 'tank') {
       if (tempF > 80.5) {
-         scheduler.setPower(3, 'on');
+         console.log('Turning on fan');
+         //_email("Turning on fan", "Turning on fan (" + tempF + "F) at " + new Date());
+         scheduler.setPower('button3', 'on');
       } else if (tempF < 80.0) {
-         scheduler.setPower(3, 'off');
+         console.log('Turning off fan');
+         //_email("Turning off fan", "Turning off fan (" + tempF + "F) at " + new Date());
+         scheduler.setPower('button3', 'off');
       }
    }   
 }
 
+
+//keep track of the latest temp for each sensor
 function _logTemp(label, tempF) {
+   if (currentState === undefined || currentState.length === 0) {
+      currentState[0] = {"id":label, "state":tempF};
+   } else {
+      var logged = false;
+      for (var i = 0; i < currentState.length; i++) {
+         if (currentState[i].id === label) {
+             currentState[i] = {"id":label, "state":tempF};
+             logged = true;
+             break;
+         }
+      }
+      if (!logged) {
+         currentState[currentState.length] = {"id":label, "state":tempF};
+      }
+   }
+}
+
+// every hour, write the last temps to a file
+function _logTempsToFile() {
 //Date,Series1,Series2
 //2009/07/12,100,200  # comments are OK on data lines
 //2009/07/19,150,201
+
+   var toSort = currentState;
+
+   toSort.sort(function(a, b){
+      if(a.id < b.id) return -1;
+      if(a.id > b.id) return 1;
+      return 0;
+   })
+
+   var csv = new Date().toLocaleString(); //7/29/2014 9:38:06 AM
+
+   csv += ',';
+   for (var i = 0; i < toSort.length; i++) {
+      csv += toSort[i].state;
+      if (i < toSort.length-1) {
+         csv += ', ';
+      }
+   }
+
+   console.log(csv);
+
+   /*fs.appendFile('temps.csv', csv, function (err) {
+      if (err) console.log('Error writing to temps.csv ' + err);
+   });*/
+
+   if (dailyState.length >= 24) {
+      // remove the first item
+      dailyState.splice(0, 1);
+   }
+
+   dailyState.push(csv);
+
+}
+
+// every day, email the temps
+function _emailTemps() {
+   var messageBody = 'Date, Room, Tank';
+   messageBody += '<br>';
+
+   for (var i = 0; i < dailyState.length; i++) {
+      messageBody += dailyState[i];
+      messageBody += '<br>';
+   }
+
+   emailer.email(messageBody);
 }
 
 exports.startLogging = function() {
    _readJSON();
    setInterval(function() {
       _getTemperatures();
-   }, 15000);
+   }, 5*60000);
+
+   _getTemperatures();
+
+   _email("Temperature logging started at " + new Date().toLocaleString());
 }
 
 exports.getTemperatures = function() {
