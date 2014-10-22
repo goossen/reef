@@ -104,6 +104,15 @@ function _controlTemp(label, tempF) {
          scheduler.setPower('button3', 'off');
       }
    }   
+   if (label === 'heater') {
+      if (tempF > 81.0) {
+         console.log('Turning off heater');
+         scheduler.setPower('button8', 'off');
+      } else if (tempF < 78.0) {
+         console.log('Turning on heater');
+         scheduler.setPower('button8', 'on');
+      }
+   }  
 }
 
 
@@ -169,13 +178,23 @@ function _logTempsToFile() {
 function _emailTemps() {
    var messageBody = 'Date, Room, Tank';
    messageBody += '<br>';
+   var send = false;
 
    for (var i = 0; i < dailyState.length; i++) {
+
+      //if the last csv entry is <81 and >77 skip email
+      var n = dailyState[i].substring(dailyState[i].lastIndexOf(",")+1);
+      if (n<78 || n>80.5) {
+         send = true;
+      }
+
       messageBody += dailyState[i];
       messageBody += '<br>';
    }
 
-   emailer.email(messageBody);
+   if (send) {
+      emailer.email(messageBody);
+   } 
 }
 
 exports.startLogging = function() {
