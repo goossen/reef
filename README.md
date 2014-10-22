@@ -11,7 +11,7 @@ The RPi is connected to power relays using the GPIO pins.  Each relay in turn is
 The GPIO pins are controlled using the pi-gpio library.  The usage is based on an example of a web-controlled power strip: http://www.instructables.com/id/Web-Controlled-8-Channel-Powerstrip/?ALLSTEPS
 
 ### Temperature monitoring
-Temperature sensors are connected to the RPi and monitor the current water temperature.  The temperature sensor can be used as a failsafe for the aquarium heater.  The temperature sensor(s) uses the ds18b20 library.  An example of its usage is give here: https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing?view=all
+Temperature sensors are connected to the RPi and monitor the current water temperature.  The temperature sensor is used to control a fan to cool the aquarium surface.  It could also be used as a failsafe for the aquarium heater.  The temperature sensor(s) uses the ds18b20 library.  An example of its usage is give here: https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing?view=all
 
 ![Insides](https://raw.github.com/goossen/reef/master/insides.jpg)
 
@@ -25,6 +25,7 @@ The user interface is html, css and straight javascript.  express.io is used to 
 ### Clone the git repository
   * cd into the parent directory you want to install the project in
   * git clone the project into a child directory
+  * edit the email credentials in the config.json file
 
 All dependencies are copied as a part of the clone operation.
 
