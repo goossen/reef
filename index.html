@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="accordian.css">
 <script src="reef.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="dygraph-combined.js"></script>
 <script>
    io = io.connect()
 
@@ -69,6 +70,8 @@
                          <table id="temptable" class="basetable">
                          </table>
                       </div>
+                      <div id="graphdiv"></div>
+
 		</ul>
 	</li>
 	<li class="block">
@@ -84,8 +87,24 @@
 </ul>
 
 <script>
+
+
+  g = new Dygraph(
+
+    // containing div
+    document.getElementById("graphdiv"),
+
+    // CSV or path to a CSV file.
+    "Date,Room,Tank\n" +
+    "2008-05-07,75,80.1\n" +
+    "2008-05-08,70,80.5\n" +
+    "2008-05-09,80,80.3\n"
+
+  );
+
 init();
 </script>
+
 
 </body>
 </html>
