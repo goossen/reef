@@ -99,7 +99,7 @@ function _controlTemp(label, tempF) {
          scheduler.setPower('button3', 'on');
       } else if (tempF < 80.0) {
          console.log('Turning off fan');
-         scheduler.setPower('button3', 'on');
+         scheduler.setPower('button3', 'off');
       }
    }   
    if (label === 'heater') {
