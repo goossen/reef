@@ -96,9 +96,17 @@ function _controlTemp(label, tempF) {
    if (label === 'tank') {
       if (tempF > 80.5) {
          console.log('Turning on fan');
+<<<<<<< HEAD
          scheduler.setPower('button3', 'on');
       } else if (tempF < 80.0) {
          console.log('Turning off fan');
+=======
+         //_email("Turning on fan", "Turning on fan (" + tempF + "F) at " + new Date());
+         scheduler.setPower('button3', 'on');
+      } else if (tempF < 80.0) {
+         console.log('Turning off fan');
+         //_email("Turning off fan", "Turning off fan (" + tempF + "F) at " + new Date());
+>>>>>>> c71feeec288871c4780d6a2ce2a5483dd2a0cbd5
          scheduler.setPower('button3', 'off');
       }
    }   
@@ -176,6 +184,7 @@ function _logTempsToFile() {
 function _emailTemps() {
    var messageBody = 'Date, Room, Tank';
    messageBody += '<br>';
+<<<<<<< HEAD
    var send = false;
 
    for (var i = 0; i < dailyState.length; i++) {
@@ -186,13 +195,21 @@ function _emailTemps() {
          send = true;
       }
 
+=======
+
+   for (var i = 0; i < dailyState.length; i++) {
+>>>>>>> c71feeec288871c4780d6a2ce2a5483dd2a0cbd5
       messageBody += dailyState[i];
       messageBody += '<br>';
    }
 
+<<<<<<< HEAD
    if (send) {
       emailer.email(messageBody);
    } 
+=======
+   emailer.email(messageBody);
+>>>>>>> c71feeec288871c4780d6a2ce2a5483dd2a0cbd5
 }
 
 exports.startLogging = function() {
