@@ -37,6 +37,12 @@ app.io.route('ready', function(req) {
    maintenance.getLog();
 
    temp.getTemperatures();
+
+   var dailyTemps = temp.getDailyTemperatures();
+   req.io.emit('dailyTemperatures', { 
+      message: dailyTemps
+   })
+
 })
 
 // Send the client html.

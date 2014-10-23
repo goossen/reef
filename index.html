@@ -38,6 +38,32 @@
        updateTemperatureTable(messages[0], messages[1]);
    })  
 
+   // Listen for the daily temperatures event.
+   io.on('dailyTemperatures', function(data) {
+       console.log(data.message)
+
+       var temps = 'Date,Room,Tank\n';
+       for (var i = 0; i < data.length; i++) {
+         temps += data[i] + '\n';
+       }
+
+
+       g = new Dygraph(
+
+         // containing div
+         document.getElementById("graphdiv"),
+
+         temps
+         // CSV or path to a CSV file.
+         //"Date,Room,Tank\n" +
+         //"2008-05-07,75,80.1\n" +
+         //"2008-05-08,70,80.5\n" +
+         //"2008-05-09,80,80.3\n"
+
+
+       );
+   })  
+
    // Listen for the maintenance event.
    io.on('maintenance', function(data) {
        //load time inputs based on schedule
@@ -89,18 +115,7 @@
 <script>
 
 
-  g = new Dygraph(
 
-    // containing div
-    document.getElementById("graphdiv"),
-
-    // CSV or path to a CSV file.
-    "Date,Room,Tank\n" +
-    "2008-05-07,75,80.1\n" +
-    "2008-05-08,70,80.5\n" +
-    "2008-05-09,80,80.3\n"
-
-  );
 
 init();
 </script>

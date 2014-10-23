@@ -210,4 +210,8 @@ exports.getTemperatures = function() {
    _getTemperatures();
 }
 
+exports.getDailyTemperatures = function() {
+   return dailyState;
+}
+
 
