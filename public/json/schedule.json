@@ -4,15 +4,15 @@
          {"time":"11:00", "state":"on"},{"time":"18:00", "state":"off"}
       ]}, 
       {"id":"button5", "schedule":[
-         {"time":"07:30", "state":"on"},{"time":"21:30", "state":"off"}
+         {"time":"07:30", "state":"on"},{"time":"22:00", "state":"off"}
       ]}, 
       {"id":"button2", "schedule":[
          {"time":"08:00", "state":"off"},
-         {"time":"08:02", "state":"on"},
-         {"time":"08:04", "state":"off"},
-         {"time":"08:06", "state":"on"},
-         {"time":"08:08", "state":"off"},
          {"time":"08:10", "state":"on"},
+         {"time":"08:20", "state":"off"},
+         {"time":"08:30", "state":"on"},
+         {"time":"08:40", "state":"off"},
+         {"time":"08:50", "state":"on"},
          {"time":"16:00", "state":"off"},
          {"time":"16:02", "state":"on"},
          {"time":"16:04", "state":"off"},
@@ -21,12 +21,12 @@
          {"time":"16:10", "state":"on"}
       ]}, 
       {"id":"button6", "schedule":[
-         {"time":"08:01", "state":"off"},
-         {"time":"08:03", "state":"on"},
          {"time":"08:05", "state":"off"},
-         {"time":"08:07", "state":"on"},
-         {"time":"08:09", "state":"off"},
-         {"time":"08:11", "state":"on"},
+         {"time":"08:15", "state":"on"},
+         {"time":"08:25", "state":"off"},
+         {"time":"08:35", "state":"on"},
+         {"time":"08:45", "state":"off"},
+         {"time":"08:55", "state":"on"},
          {"time":"16:01", "state":"off"},
          {"time":"16:03", "state":"on"},
          {"time":"16:05", "state":"off"},
