@@ -46,29 +46,12 @@ NODE_JS_HOME="/opt/node"
 PATH="$PATH:$NODE_JS_HOME/bin"
 ```
 
-### Setup gpio privileges
-```Shell
-git clone git://github.com/quick2wire/quick2wire-gpio-admin.git
-cd quick2wire-gpio-admin
-make
-sudo make install
-sudo adduser $USER gpio
-```
-
 ### Set nodejs.sh startup behavior
 ```Shell
 chmod 755 nodejs.sh
 sudo cp nodejs.sh /etc/init.d
 sudo update-rc.d nodejs.sh defaults
 ```
-
-### Set wifi_drop.sh startup behavior
-```Shell
-chmod 755 wifi_drop.sh
-sudo cp wifi_drop.sh /etc/init.d
-sudo update-rc.d wifi_drop.sh defaults
-```
-
 
 
 
