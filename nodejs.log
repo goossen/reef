@@ -1,0 +1,109 @@
+scheduling button1
+   scheduling on at 11:00
+   scheduling off at 18:00
+scheduling button5
+   scheduling on at 07:30
+   scheduling off at 22:00
+scheduling button2
+   scheduling off at 08:00
+   scheduling on at 08:10
+   scheduling off at 08:20
+   scheduling on at 08:30
+   scheduling off at 08:40
+   scheduling on at 08:50
+   scheduling off at 16:00
+   scheduling on at 16:02
+   scheduling off at 16:04
+   scheduling on at 16:06
+   scheduling off at 16:08
+   scheduling on at 16:10
+scheduling button6
+   scheduling off at 08:05
+   scheduling on at 08:15
+   scheduling off at 08:25
+   scheduling on at 08:35
+   scheduling off at 08:45
+   scheduling on at 08:55
+   scheduling off at 16:01
+   scheduling on at 16:03
+   scheduling off at 16:05
+   scheduling on at 16:07
+   scheduling off at 16:09
+   scheduling on at 16:11
+initializing button1
+setting initial state for button3 off
+turning button3 off
+setting initial state for button4 on
+turning button4 on
+setting initial state for button7 on
+turning button7 on
+setting initial state for button8 on
+turning button8 on
+turning button1 off
+initialized button1
+initializing button5
+turning button5 on
+initialized button5
+initializing button2
+turning button2 on
+initialized button2
+initializing button6
+turning button6 on
+initialized button6
+Turning off fan
+turning button3 off
+Message sent: 250 2.0.0 OK 1455891478 p199sm8601268ywp.37 - gsmtp
+2/19/2016, 9:18:08 AM,62.2, 61.9
+Turning off fan
+turning button3 off
+[90mGET / [36m304 [90m145ms[0m
+[90mGET /reef.css [36m304 [90m108ms[0m
+[90mGET /accordian.css [36m304 [90m103ms[0m
+[90mGET /dygraph-combined.js [36m304 [90m67ms[0m
+[90mGET /reef.js [36m304 [90m128ms[0m
+[90mGET /json/buttons.json [36m304 [90m12ms[0m
+Turning off fan
+turning button3 off
+[90mGET / [36m304 [90m17ms[0m
+[90mGET /reef.css [36m304 [90m51ms[0m
+[90mGET /accordian.css [36m304 [90m53ms[0m
+[90mGET /dygraph-combined.js [36m304 [90m34ms[0m
+[90mGET /reef.js [36m304 [90m67ms[0m
+[90mGET /json/buttons.json [36m304 [90m8ms[0m
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+2/19/2016, 10:00:00 AM,62.5, 77.2
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off
+Turning off fan
+turning button3 off

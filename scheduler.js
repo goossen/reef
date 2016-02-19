@@ -1,6 +1,6 @@
 var fs = require('fs'),
     path = require('path'),
-    gpio = require("pi-gpio"),
+    gpio = require('onoff').Gpio,
     schedule = require('node-schedule');
 
 // Array of current power on/off state, so that clients can be told about this when they connect
@@ -15,6 +15,9 @@ var scheduleJSON;
 
 //keep the state of the buttons.json file in memory
 var buttonsJSON;
+
+//array of GPIO button objects
+var buttonsGPIO = [];
 
 fs.watchFile(path.join(__dirname, 'public/json/buttons.json'), function (curr, prev) {
    console.log('buttons.json updated');
@@ -208,17 +211,28 @@ function _setInitialState() {
 function _turnOnOff(id, state) {
    console.log('turning ' + id + ' ' + state);
    var pin = _getGPIO(id);
-   gpio.open(pin, 'output', function(err) {     // Open pin for output
-      if (state === 'off') {
-         gpio.write(pin, 1, function() {        // Set pin to high (1)
-            gpio.close(pin);                    // Close pin
-         });
-      } else {
-         gpio.write(pin, 0, function() {        // Set pin to low (0)
-            gpio.close(pin);                    // Close pin
-         });
-      }
-   });
+
+   var button;
+   buttonsGPIO.forEach(function(element) {
+       if (element.gpio === pin) { 
+          button = element;
+       }
+   })
+
+   if (button === undefined) {
+      button = new gpio(pin, 'out');
+      buttonsGPIO.push(button);
+   }
+
+   //TODO button.unexport();
+
+   if (state === 'off') {
+      //set pin to high (1)
+      if (button.readSync() === 0) button.writeSync(1);
+   } else {
+      //set pin to low (0)
+      if (button.readSync() === 1) button.writeSync(0);
+   }
 }
 
 function _getGPIO(id) {
